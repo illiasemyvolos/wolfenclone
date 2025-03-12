@@ -115,5 +115,15 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void RestoreHealth(float amount)
+    {
+        if (currentHealth < maxHealth)  // Added check for additional safety
+        {
+            currentHealth = Mathf.Min(currentHealth + amount, maxHealth);
+            Debug.Log($"💉 Player healed for {amount} HP. Current HP: {currentHealth}");
+        }
+    }
+
+
     
 }
