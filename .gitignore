@@ -80,3 +80,9 @@ src/CustomGenerators/CustomGenerators/KSyndicate.CustomGenerators.Plugins/bin
 /src/dotc/[Aa]ssets/[Ss]treamingAssets/aa/*
 
 .DS_Store
+/Library
+/Logs
+/Logs
+/Temp/Burst/burst-aot1gzb7k6h.gdd
+/Temp/Burst
+/Temp
