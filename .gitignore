@@ -2,13 +2,13 @@
 #
 # Get latest from https://github.com/github/gitignore/blob/main/Unity.gitignore
 #
-/src/dotc/[Ll]ibrary/
-/src/dotc/[Tt]emp/
-/src/dotc/[Oo]bj/
-/src/dotc/[Bb]uild/
-/src/dotc/[Bb]uilds/
-/src/dotc/[Ll]ogs/
-/src/dotc/[Uu]ser[Ss]ettings/
+/wolfenclone/[Ll]ibrary/
+/wolfenclone/[Tt]emp/
+/wolfenclone/[Oo]bj/
+/wolfenclone/[Bb]uild/
+/wolfenclone/[Bb]uilds/
+/wolfenclone/[Ll]ogs/
+/wolfenclone/[Uu]ser[Ss]ettings/
 
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data
@@ -91,3 +91,4 @@ src/CustomGenerators/CustomGenerators/KSyndicate.CustomGenerators.Plugins/bin
 Logs/shadercompiler-UnityShaderCompiler-0.log
 UserSettings/Layouts/default-6000.dwlt
 Logs/shadercompiler-UnityShaderCompiler-0.log
+UserSettings/Layouts/default-6000.dwlt
