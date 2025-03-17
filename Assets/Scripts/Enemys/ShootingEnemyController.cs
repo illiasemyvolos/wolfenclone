@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
+using System.Collections;
 
 public class ShootingEnemyController : MonoBehaviour
 {
@@ -14,8 +15,16 @@ public class ShootingEnemyController : MonoBehaviour
     public float bulletSpeed = 10f;
     public float shootingCooldown = 2f;
 
+    [Header("Shooting Sector Settings")]
+    public float shootingSectorAngle = 60f; // Shooting sector angle (degrees)
+
+    [Header("Burst Fire Settings")]
+    public bool useBurstFire = true;
+    public int burstCount = 3;
+    public float burstInterval = 0.2f;
+
     [Header("Aiming Settings")]
-    public float rotationSpeed = 5f;  // Speed of enemy rotation while aiming
+    public float rotationSpeed = 5f;
 
     [Header("Stagger Settings")]
     public float staggerDuration = 1f;
@@ -50,12 +59,19 @@ public class ShootingEnemyController : MonoBehaviour
 
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
-        if (distanceToPlayer <= attackRange)
+        if (distanceToPlayer <= attackRange && IsPlayerInShootingSector())
         {
-            FacePlayer();  // Aim before shooting
+            FacePlayer();
             if (Time.time >= lastShotTime + shootingCooldown)
             {
-                ShootAtPlayer();
+                if (useBurstFire)
+                {
+                    StartCoroutine(BurstFire());
+                }
+                else
+                {
+                    ShootAtPlayer();
+                }
             }
         }
         else if (distanceToPlayer <= visionRange)
@@ -88,6 +104,20 @@ public class ShootingEnemyController : MonoBehaviour
         }
     }
 
+    IEnumerator BurstFire()
+    {
+        for (int i = 0; i < burstCount; i++)
+        {
+            if (IsPlayerInShootingSector())
+            {
+                ShootAtPlayer();
+            }
+            yield return new WaitForSeconds(burstInterval); 
+        }
+
+        lastShotTime = Time.time; 
+    }
+
     void ShootAtPlayer()
     {
         if (firePoint != null && bulletPrefab != null)
@@ -101,7 +131,7 @@ public class ShootingEnemyController : MonoBehaviour
                 rb.linearVelocity = shootDirection * bulletSpeed;
             }
 
-            Destroy(bullet, 5f);  // Destroy bullet after 5 seconds to prevent clutter
+            Destroy(bullet, 5f);  
         }
 
         lastShotTime = Time.time;
@@ -112,6 +142,14 @@ public class ShootingEnemyController : MonoBehaviour
         Vector3 direction = (player.position - transform.position).normalized;
         Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0f, direction.z));
         transform.rotation = Quaternion.Lerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
+    }
+
+    bool IsPlayerInShootingSector()
+    {
+        Vector3 directionToPlayer = (player.position - transform.position).normalized;
+        float angleToPlayer = Vector3.Angle(transform.forward, directionToPlayer);
+
+        return angleToPlayer <= shootingSectorAngle / 2;
     }
 
     public void Stagger()
