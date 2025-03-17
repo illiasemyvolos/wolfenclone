@@ -39,7 +39,19 @@ public class Projectile : MonoBehaviour
         }
         else if (!other.CompareTag("Enemy") && !other.isTrigger)
         {
-            // Optional: Create an impact effect on walls or objects
+            // Collision with environment (walls, floors, etc.)
+            Debug.Log("🧱 Projectile hit a wall or object!");
+            CreateImpactEffect();
+            Destroy(gameObject);
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        // Additional check to destroy projectile when hitting non-trigger colliders
+        if (!collision.collider.CompareTag("Player") && !collision.collider.CompareTag("Enemy"))
+        {
+            Debug.Log("💥 Projectile collided with an object and was destroyed.");
             CreateImpactEffect();
             Destroy(gameObject);
         }

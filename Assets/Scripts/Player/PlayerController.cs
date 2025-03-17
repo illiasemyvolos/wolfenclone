@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed = 5f;
     public float jumpHeight = 2f;
     public float gravity = -9.81f;
-    
+
     [Header("Look Settings")]
     public float lookSensitivity = 2f;
     public Transform cameraTransform;
@@ -20,8 +20,12 @@ public class PlayerController : MonoBehaviour
     private float currentHealth;
 
     [Header("Stagger Settings")]
-    public float staggerDuration = 1f;  // Duration of stagger effect
-    public float staggerSpeedMultiplier = 0.3f; // Speed reduction during stagger
+    public float staggerDuration = 1f;  
+    public float staggerSpeedMultiplier = 0.3f;
+
+    [Header("UI References")]
+    public DeathScreenController deathScreenController; // Public reference for death screen
+    public DamageScreenController damageScreenController;
 
     private CharacterController controller;
     private Vector3 velocity;
@@ -31,7 +35,7 @@ public class PlayerController : MonoBehaviour
     private InputAction lookAction;
     private InputAction jumpAction;
 
-    private bool isStaggered = false; // Stagger state flag
+    private bool isStaggered = false; 
 
     private void Awake()
     {
@@ -42,7 +46,6 @@ public class PlayerController : MonoBehaviour
         lookAction = playerInput.actions["Look"];
         jumpAction = playerInput.actions["Jump"];
 
-        // Lock the cursor at the start of the game
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
@@ -50,6 +53,17 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         currentHealth = maxHealth;
+
+        // Auto-assign Death Screen if not set manually
+        if (deathScreenController == null)
+        {
+            deathScreenController = FindObjectOfType<DeathScreenController>();
+        }
+
+        if (damageScreenController == null)
+        {
+            damageScreenController = FindObjectOfType<DamageScreenController>();
+        }
     }
 
     public float GetCurrentHealth() => currentHealth;
@@ -60,10 +74,19 @@ public class PlayerController : MonoBehaviour
         currentHealth = Mathf.Max(currentHealth - damage, 0f);
         Debug.Log($"Player took {damage} damage. Current HP: {currentHealth}");
 
+        if (damageScreenController != null)
+        {
+            damageScreenController.ShowDamageEffect();
+        }
+
         if (currentHealth <= 0)
         {
             Debug.Log("Player has died!");
-            // Add death logic if needed (e.g., respawn, restart scene)
+            
+            if (deathScreenController != null)
+            {
+                deathScreenController.ShowDeathScreen();
+            }
         }
     }
 
@@ -73,14 +96,12 @@ public class PlayerController : MonoBehaviour
         HandleLook();
         HandleJump();
 
-        // Unlock cursor with ESC (optional)
         if (Keyboard.current.escapeKey.wasPressedThisFrame)
         {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
         }
 
-        // Lock cursor again with Left Click (optional)
         if (Mouse.current.leftButton.wasPressedThisFrame)
         {
             Cursor.lockState = CursorLockMode.Locked;
@@ -113,7 +134,7 @@ public class PlayerController : MonoBehaviour
     {
         if (controller.isGrounded)
         {
-            velocity.y = -2f; // Slight downward force to ensure proper grounding.
+            velocity.y = -2f;
 
             if (jumpAction.triggered)
             {
@@ -124,7 +145,7 @@ public class PlayerController : MonoBehaviour
 
     public void RestoreHealth(float amount)
     {
-        if (currentHealth < maxHealth)  // Added check for additional safety
+        if (currentHealth < maxHealth)
         {
             currentHealth = Mathf.Min(currentHealth + amount, maxHealth);
             Debug.Log($"💉 Player healed for {amount} HP. Current HP: {currentHealth}");
@@ -145,16 +166,13 @@ public class PlayerController : MonoBehaviour
         Debug.Log("💥 Player staggered!");
 
         float originalSpeed = moveSpeed;
-        moveSpeed *= staggerSpeedMultiplier; // Slow player movement
+        moveSpeed *= staggerSpeedMultiplier;
 
         yield return new WaitForSeconds(staggerDuration);
 
-        moveSpeed = originalSpeed; // Restore movement speed
+        moveSpeed = originalSpeed;
         isStaggered = false;
 
         Debug.Log("✅ Player recovered from stagger.");
     }
-
-
-    
 }
