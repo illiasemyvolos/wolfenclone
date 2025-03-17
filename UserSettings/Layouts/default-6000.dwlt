@@ -218,8 +218,8 @@ MonoBehaviour:
     y: 0
     width: 885
     height: 544.5
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 202, y: 226}
+  m_MaxSize: {x: 4002, y: 4026}
   m_ActualView: {fileID: 14}
   m_Panes:
   - {fileID: 14}
@@ -272,8 +272,8 @@ MonoBehaviour:
     y: 0
     width: 280
     height: 844
-  m_MinSize: {x: 275, y: 50}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 276, y: 76}
+  m_MaxSize: {x: 4001, y: 4026}
   m_ActualView: {fileID: 17}
   m_Panes:
   - {fileID: 17}
@@ -423,7 +423,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: f8cbfeff90ccfeff24cefeff4acffeff50d1feffd470ffff7c73ffff22fbffff1aa600004aa60000c4a60000
+      m_ExpandedIDs: 1ae5ffff7ef7ffff46f8ffff22fbffff52a8000056a80000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1055,9 +1055,9 @@ MonoBehaviour:
   m_AudioPlay: 0
   m_DebugDrawModesUseInteractiveLightBakingData: 0
   m_Position:
-    m_Target: {x: -7.8, y: 4.07, z: 30.1}
+    m_Target: {x: 937.2405, y: 550.47784, z: 634.87634}
     speed: 2
-    m_Value: {x: -7.8, y: 4.07, z: 30.1}
+    m_Value: {x: 937.2405, y: 550.47784, z: 634.87634}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -1103,13 +1103,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: -0.1977368, y: 0.5129627, z: -0.12275975, w: -0.8262557}
+    m_Target: {x: 0, y: 0, z: 0, w: 1}
     speed: 2
-    m_Value: {x: -0.1977369, y: 0.512963, z: -0.12275982, w: -0.8262561}
+    m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 4.518446
+    m_Target: 992.42206
     speed: 2
-    m_Value: 4.518446
+    m_Value: 992.42206
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -1187,7 +1187,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scripts
+    - Assets
     m_Globs: []
     m_ProductIds: 
     m_AnyWithAssetOrigin: 0
@@ -1197,16 +1197,16 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Scripts
+  - Assets
   m_LastFoldersGridSize: -1
   m_LastProjectPath: /Users/illiasemyvolos/Unity/wolfenclone
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 02ac0000
-    m_LastClickedID: 44034
-    m_ExpandedIDs: 000000006aab000000ac000002ac000000ca9a3b
+    m_SelectedIDs: 1ca60000
+    m_LastClickedID: 42524
+    m_ExpandedIDs: 000000001ca6000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1235,7 +1235,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 000000006aab0000
+    m_ExpandedIDs: 000000001ca60000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
