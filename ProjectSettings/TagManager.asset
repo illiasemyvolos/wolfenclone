@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Enemy
   - Door
+  - Projectiles
   layers:
   - Default
   - TransparentFX
@@ -16,8 +17,8 @@ TagManager:
   - Player
   - Enemy
   - Door
-  - 
-  - 
+  - Projectiles
+  - Walls
   - 
   - 
   - 

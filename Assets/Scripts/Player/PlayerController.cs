@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour
@@ -18,6 +19,10 @@ public class PlayerController : MonoBehaviour
     public float maxHealth = 100f;
     private float currentHealth;
 
+    [Header("Stagger Settings")]
+    public float staggerDuration = 1f;  // Duration of stagger effect
+    public float staggerSpeedMultiplier = 0.3f; // Speed reduction during stagger
+
     private CharacterController controller;
     private Vector3 velocity;
 
@@ -25,6 +30,8 @@ public class PlayerController : MonoBehaviour
     private InputAction moveAction;
     private InputAction lookAction;
     private InputAction jumpAction;
+
+    private bool isStaggered = false; // Stagger state flag
 
     private void Awake()
     {
@@ -122,6 +129,30 @@ public class PlayerController : MonoBehaviour
             currentHealth = Mathf.Min(currentHealth + amount, maxHealth);
             Debug.Log($"💉 Player healed for {amount} HP. Current HP: {currentHealth}");
         }
+    }
+
+    public void Stagger()
+    {
+        if (!isStaggered)
+        {
+            StartCoroutine(StaggerCoroutine());
+        }
+    }
+
+    private IEnumerator StaggerCoroutine()
+    {
+        isStaggered = true;
+        Debug.Log("💥 Player staggered!");
+
+        float originalSpeed = moveSpeed;
+        moveSpeed *= staggerSpeedMultiplier; // Slow player movement
+
+        yield return new WaitForSeconds(staggerDuration);
+
+        moveSpeed = originalSpeed; // Restore movement speed
+        isStaggered = false;
+
+        Debug.Log("✅ Player recovered from stagger.");
     }
 
 
