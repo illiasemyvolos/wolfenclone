@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.EventSystems;
 
 public class PauseMenuController : MonoBehaviour
 {
@@ -64,7 +65,7 @@ public class PauseMenuController : MonoBehaviour
 
     private void TogglePause()
     {
-        if (pauseMenuCanvasGroup == null) return; // Safety check in case of deletion
+        if (pauseMenuCanvasGroup == null) return;
 
         if (isPaused)
         {
@@ -78,45 +79,49 @@ public class PauseMenuController : MonoBehaviour
 
     public void ShowPauseMenu()
     {
-        if (pauseMenuCanvasGroup == null) return; // Safety check
+        if (pauseMenuCanvasGroup == null) return;
 
         isPaused = true;
-        Time.timeScale = 0f; // Pause the game
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+        Time.timeScale = 0f; 
 
+        StartCoroutine(DelayCursorUnlock()); 
         StartCoroutine(FadeInPauseMenu());
 
-        // Auto-select "Resume" button for gamepad navigation
-        if (resumeButton != null)
-        {
-            resumeButton.Select();
-        }
+        // Force focus on UI element
+        EventSystem.current.SetSelectedGameObject(resumeButton.gameObject);
+    }
+
+
+    private IEnumerator DelayCursorUnlock()
+    {
+        yield return new WaitForSecondsRealtime(0.1f); 
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 
     private IEnumerator FadeInPauseMenu()
     {
-        if (pauseMenuCanvasGroup == null) yield break; // Safety check
+        if (pauseMenuCanvasGroup == null) yield break;
 
         float elapsedTime = 0f;
 
         while (elapsedTime < fadeDuration)
         {
-            elapsedTime += Time.unscaledDeltaTime;  // Important for smooth fade while paused
+            elapsedTime += Time.unscaledDeltaTime;
             pauseMenuCanvasGroup.alpha = Mathf.Clamp01(elapsedTime / fadeDuration);
             yield return null;
         }
 
         pauseMenuCanvasGroup.interactable = true;
-        pauseMenuCanvasGroup.blocksRaycasts = true;
+        pauseMenuCanvasGroup.blocksRaycasts = true;  // Ensures UI registers clicks
     }
 
     public void ResumeGame()
     {
-        if (pauseMenuCanvasGroup == null) return; // Safety check
+        if (pauseMenuCanvasGroup == null) return;
 
         isPaused = false;
-        Time.timeScale = 1f; // Resume game speed
+        Time.timeScale = 1f;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
@@ -125,11 +130,11 @@ public class PauseMenuController : MonoBehaviour
 
     private void HidePauseMenuInstantly()
     {
-        if (pauseMenuCanvasGroup != null) // Safety check
+        if (pauseMenuCanvasGroup != null)
         {
             pauseMenuCanvasGroup.alpha = 0f;
             pauseMenuCanvasGroup.interactable = false;
-            pauseMenuCanvasGroup.blocksRaycasts = false;
+            pauseMenuCanvasGroup.blocksRaycasts = false; // Prevents accidental clicks when hidden
         }
     }
 
@@ -142,6 +147,6 @@ public class PauseMenuController : MonoBehaviour
     public void ReturnToMainMenu()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene("MainMenu"); // Make sure "MainMenu" is the correct scene name
+        SceneManager.LoadScene("MainMenu"); 
     }
 }

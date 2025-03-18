@@ -27,6 +27,9 @@ public class PlayerController : MonoBehaviour
     public DeathScreenController deathScreenController; // Public reference for death screen
     public DamageScreenController damageScreenController;
 
+    public float GetCurrentHealth() => currentHealth;
+    public float GetMaxHealth() => maxHealth;
+
     private CharacterController controller;
     private Vector3 velocity;
 
@@ -66,8 +69,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public float GetCurrentHealth() => currentHealth;
-    public float GetMaxHealth() => maxHealth;
+    
 
     public void TakeDamage(float damage)
     {
