@@ -26,7 +26,7 @@ public class InitializationManager : MonoBehaviour
 
         if (playerController != null && playerUI != null)
         {
-            playerUI.UpdateHealthUI();
+            playerUI.UpdatePlayerStats();  // ✅ Updated to reflect refactored method
         }
 
         Debug.Log("✅ Game Initialized Successfully.");

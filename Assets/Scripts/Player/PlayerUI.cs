@@ -7,12 +7,15 @@ public class PlayerUI : MonoBehaviour
     [Header("Health UI")]
     public TextMeshProUGUI healthText;
 
+    [Header("Armor UI")]
+    public TextMeshProUGUI armorText;
+
     [Header("Weapon Info UI")]
     public TextMeshProUGUI weaponNameText;
     public TextMeshProUGUI ammoText;
 
     [Header("Reloading UI")]
-    public TextMeshProUGUI reloadingText; // Display "Reloading..."
+    public TextMeshProUGUI reloadingText;
 
     [Header("Crosshair UI")]
     public GameObject crosshair;
@@ -39,30 +42,33 @@ public class PlayerUI : MonoBehaviour
 
         if (reloadingText != null)
         {
-            reloadingText.gameObject.SetActive(false);  // Hide reload text at start
+            reloadingText.gameObject.SetActive(false);
         }
     }
 
     private void Update()
     {
-        UpdateHealthUI();
+        UpdatePlayerStats();
         UpdateWeaponInfo();
     }
 
-    public void UpdateHealthUI()
+    // Combines Health and Armor updates into a single method for clarity
+    public void UpdatePlayerStats()
     {
         if (playerController == null) return;
 
-        float currentHealth = playerController.GetCurrentHealth();
-        float maxHealth = playerController.GetMaxHealth();
-
         if (healthText != null)
         {
-            healthText.text = $"HP: {currentHealth} / {maxHealth}";
+            healthText.text = $"{playerController.GetCurrentHealth()}";
+        }
+
+        if (armorText != null)
+        {
+            armorText.text = $"{playerController.GetCurrentArmor()}";
         }
     }
 
-    void UpdateWeaponInfo()
+    private void UpdateWeaponInfo()
     {
         if (weaponManager == null) return;
 

@@ -19,16 +19,23 @@ public class PlayerController : MonoBehaviour
     public float maxHealth = 100f;
     private float currentHealth;
 
+    [Header("Armor Settings")]
+    public float maxArmor = 50f;  
+    private float currentArmor;
+
     [Header("Stagger Settings")]
     public float staggerDuration = 1f;  
     public float staggerSpeedMultiplier = 0.3f;
 
     [Header("UI References")]
-    public DeathScreenController deathScreenController; // Public reference for death screen
+    public DeathScreenController deathScreenController;
     public DamageScreenController damageScreenController;
 
     public float GetCurrentHealth() => currentHealth;
     public float GetMaxHealth() => maxHealth;
+
+    public float GetCurrentArmor() => currentArmor;
+    public float GetMaxArmor() => maxArmor;
 
     private CharacterController controller;
     private Vector3 velocity;
@@ -56,8 +63,8 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         currentHealth = maxHealth;
+        currentArmor = maxArmor;
 
-        // Auto-assign Death Screen if not set manually
         if (deathScreenController == null)
         {
             deathScreenController = FindObjectOfType<DeathScreenController>();
@@ -69,12 +76,31 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    
-
     public void TakeDamage(float damage)
     {
-        currentHealth = Mathf.Max(currentHealth - damage, 0f);
-        Debug.Log($"Player took {damage} damage. Current HP: {currentHealth}");
+        if (currentArmor > 0)
+        {
+            float remainingDamage = damage - currentArmor;
+
+            if (remainingDamage > 0)
+            {
+                // Armor absorbs part of the damage
+                currentArmor = 0;
+                currentHealth -= remainingDamage;
+            }
+            else
+            {
+                // Armor absorbs all damage
+                currentArmor -= damage;
+            }
+        }
+        else
+        {
+            // No armor, damage applies directly to health
+            currentHealth = Mathf.Max(currentHealth - damage, 0f);
+        }
+
+        Debug.Log($"Player took {damage} damage. Current HP: {currentHealth}, Current Armor: {currentArmor}");
 
         if (damageScreenController != null)
         {
@@ -84,12 +110,17 @@ public class PlayerController : MonoBehaviour
         if (currentHealth <= 0)
         {
             Debug.Log("Player has died!");
-            
             if (deathScreenController != null)
             {
                 deathScreenController.ShowDeathScreen();
             }
         }
+    }
+
+    public void AddArmor(float armorAmount)
+    {
+        currentArmor = Mathf.Clamp(currentArmor + armorAmount, 0, maxArmor);
+        Debug.Log($"🛡️ Armor Restored: {armorAmount} | Current Armor: {currentArmor}");
     }
 
     private void Update()
