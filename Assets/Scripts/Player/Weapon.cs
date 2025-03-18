@@ -11,9 +11,20 @@ public class Weapon : MonoBehaviour
     public int clipSize = 30;
     public int maxAmmo = 120;
     public float reloadTime = 2f;
+    public float fireRange = 50f;  
+
+    [Header("Shotgun Settings")]
+    public bool isShotgun = false;
+    public int pelletsPerShot = 6;
+    public float spreadAngle = 10f;
+
+    [Header("Accuracy Settings")]
+    public float baseAccuracy = 1f;
+    public float movementAccuracyPenalty = 0.5f;
+    public float recoveryRate = 0.1f;
 
     [Header("UI Reference")]
-    private PlayerUI playerUI; // NEW: Reference to PlayerUI
+    private PlayerUI playerUI;
 
     [Header("Recoil Settings")]
     public float recoilAmount = 0.1f;
@@ -27,9 +38,13 @@ public class Weapon : MonoBehaviour
     public int currentAmmo;
     public int totalAmmo;
 
+    [Header("Bullet Hole System")]  // ✅ Added bullet hole system
+    public GameObject bulletHolePrefab;
+    public float bulletHoleLifetime = 10f;
+
+    private float currentAccuracy;
     private float nextFireTime;
     private Vector3 originalPosition;
-
     private bool isReloading = false;
 
     private void Start()
@@ -38,6 +53,7 @@ public class Weapon : MonoBehaviour
         totalAmmo = maxAmmo;
 
         originalPosition = transform.localPosition;
+        currentAccuracy = baseAccuracy;
 
         InitializationManager initManager = FindObjectOfType<InitializationManager>();
         playerUI = initManager?.playerUI;
@@ -46,6 +62,11 @@ public class Weapon : MonoBehaviour
         {
             Debug.LogError("❌ PlayerUI not found via InitializationManager!");
         }
+    }
+
+    private void Update()
+    {
+        RecoverAccuracy();
     }
 
     public bool CanShoot()
@@ -60,26 +81,103 @@ public class Weapon : MonoBehaviour
         currentAmmo--;
         nextFireTime = Time.time + fireRate;
 
-        Debug.Log($"{weaponName} fired! Ammo left: {currentAmmo}");
-
         ShowMuzzleFlash();
 
-        // Add Raycast Damage Logic
+        if (isShotgun)
+        {
+            FireShotgunBlast();
+        }
+        else
+        {
+            FireSingleShot();
+        }
+
+        ApplyAccuracyPenalty();
+        StartCoroutine(ApplyRecoil());
+    }
+
+    private void FireSingleShot()
+    {
         RaycastHit hit;
-        if (Physics.Raycast(muzzleFlashPoint.position, muzzleFlashPoint.forward, out hit, 100f))
+        Vector3 directionWithSpread = ApplyAccuracyToDirection(muzzleFlashPoint.forward);
+
+        if (Physics.Raycast(muzzleFlashPoint.position, directionWithSpread, out hit, fireRange))
         {
             if (hit.collider.CompareTag("Enemy"))
             {
                 EnemyHealth enemyHealth = hit.collider.GetComponent<EnemyHealth>();
                 if (enemyHealth != null)
                 {
-                    enemyHealth.TakeDamage(damage); // Apply weapon damage
+                    enemyHealth.TakeDamage(damage);
                     Debug.Log($"Hit {hit.collider.gameObject.name} for {damage} damage.");
                 }
             }
+            else
+            {
+                CreateBulletHole(hit);  // ✅ Create bullet hole on non-enemy surfaces
+            }
         }
+    }
 
-    StartCoroutine(ApplyRecoil());
+    private void FireShotgunBlast()
+    {
+        for (int i = 0; i < pelletsPerShot; i++)
+        {
+            Vector3 pelletDirection = ApplyAccuracyToDirection(muzzleFlashPoint.forward);
+
+            if (Physics.Raycast(muzzleFlashPoint.position, pelletDirection, out RaycastHit hit, fireRange))
+            {
+                if (hit.collider.CompareTag("Enemy"))
+                {
+                    EnemyHealth enemyHealth = hit.collider.GetComponent<EnemyHealth>();
+                    if (enemyHealth != null)
+                    {
+                        enemyHealth.TakeDamage(damage / 2);
+                        Debug.Log($"Shotgun pellet hit {hit.collider.gameObject.name} for {damage / 2} damage.");
+                    }
+                }
+                else
+                {
+                    CreateBulletHole(hit);  // ✅ Add bullet hole for shotgun pellets too
+                }
+            }
+        }
+    }
+
+    private void CreateBulletHole(RaycastHit hit)
+    {
+        if (bulletHolePrefab != null)
+        {
+            GameObject bulletHole = Instantiate(bulletHolePrefab, hit.point + (hit.normal * 0.01f), Quaternion.LookRotation(hit.normal));
+            bulletHole.transform.SetParent(hit.collider.transform); // Stick to the surface
+            Destroy(bulletHole, bulletHoleLifetime);  // Auto-cleanup
+        }
+    }
+
+    private Vector3 ApplyAccuracyToDirection(Vector3 direction)
+    {
+        float spread = (1f - currentAccuracy) * spreadAngle;
+
+        Quaternion spreadRotation = Quaternion.Euler(
+            Random.Range(-spread, spread),
+            Random.Range(-spread, spread),
+            0f
+        );
+
+        return spreadRotation * direction;
+    }
+
+    private void ApplyAccuracyPenalty()
+    {
+        currentAccuracy = Mathf.Clamp(currentAccuracy - 0.1f, 0.2f, baseAccuracy);
+    }
+
+    private void RecoverAccuracy()
+    {
+        if (currentAccuracy < baseAccuracy)
+        {
+            currentAccuracy = Mathf.Min(currentAccuracy + recoveryRate * Time.deltaTime, baseAccuracy);
+        }
     }
 
     public void Reload()
@@ -98,10 +196,8 @@ public class Weapon : MonoBehaviour
 
         if (playerUI != null)
         {
-            playerUI.ShowReloadingText(true); // Show Reloading Text
+            playerUI.ShowReloadingText(true);
         }
-
-        Debug.Log($"{weaponName} is reloading...");
 
         yield return new WaitForSeconds(reloadTime);
 
@@ -109,11 +205,9 @@ public class Weapon : MonoBehaviour
         totalAmmo -= ammoToReload;
         currentAmmo += ammoToReload;
 
-        Debug.Log($"{weaponName} reloaded! Ammo in clip: {currentAmmo}, Total ammo: {totalAmmo}");
-
         if (playerUI != null)
         {
-            playerUI.ShowReloadingText(false); // Hide Reloading Text
+            playerUI.ShowReloadingText(false);
         }
 
         isReloading = false;
@@ -124,15 +218,13 @@ public class Weapon : MonoBehaviour
         Vector3 recoilPosition = originalPosition - new Vector3(0, 0, recoilAmount);
         float elapsedTime = 0f;
 
-        // Recoil Kickback Phase
-        while (elapsedTime < 0.05f) // Fast kickback for impactful recoil
+        while (elapsedTime < 0.05f)
         {
             transform.localPosition = Vector3.Lerp(transform.localPosition, recoilPosition, elapsedTime * recoilSpeed);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
-        // Smooth Recovery Phase
         elapsedTime = 0f;
         while (elapsedTime < 0.1f)
         {
@@ -141,9 +233,8 @@ public class Weapon : MonoBehaviour
             yield return null;
         }
 
-        transform.localPosition = originalPosition; // Ensure final correction
+        transform.localPosition = originalPosition;
     }
-
 
     public void AddAmmo(int amount)
     {

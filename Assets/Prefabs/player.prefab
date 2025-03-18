@@ -166,6 +166,22 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: ffe6edcd-3026-4fb7-803e-dfb646608e08
     m_ActionName: Player/Reload
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 9c99504e-ac9c-42e9-8521-6cb633734f5f
+    m_ActionName: 'Player/Fire[/Mouse/leftButton]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 4fd8a3b7-4296-4f01-8b59-978dbf1432a8
+    m_ActionName: 'Player/NextWeapon[/Keyboard/2]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 4ab79bff-a7fc-4773-9713-a2f96bfe2331
+    m_ActionName: 'Player/PreviousWeapon[/Keyboard/1]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: b0da03a2-049d-44c5-8713-73c83f6c2349
+    m_ActionName: Player/Pause
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -188,6 +204,12 @@ MonoBehaviour:
   gravity: -9.81
   lookSensitivity: 2
   cameraTransform: {fileID: 4561254837989878619}
+  maxHealth: 100
+  maxArmor: 50
+  staggerDuration: 1
+  staggerSpeedMultiplier: 0.3
+  deathScreenController: {fileID: 0}
+  damageScreenController: {fileID: 0}
 --- !u!114 &1649211802841259284
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -253,7 +275,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4416356950179813375
 Transform:
   m_ObjectHideFlags: 0
@@ -283,13 +305,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponName: MP45
+  ammoType: 0
   fireRate: 0.1
   damage: 5
   clipSize: 30
   maxAmmo: 120
   reloadTime: 2
-  recoil: 1
-  accuracy: 0.7
+  isShotgun: 0
+  pelletsPerShot: 6
+  spreadAngle: 10
+  baseAccuracy: 0.79
+  movementAccuracyPenalty: 0.47
+  recoveryRate: 0.1
+  recoilAmount: 0.1
+  recoilSpeed: 10
   muzzleFlashPrefab: {fileID: 0}
   muzzleFlashPoint: {fileID: 0}
   currentAmmo: 120
@@ -340,13 +369,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponName: Revolver
+  ammoType: 0
   fireRate: 0.1
   damage: 10
   clipSize: 6
   maxAmmo: 30
   reloadTime: 2
-  recoil: 1
-  accuracy: 0.9
+  isShotgun: 0
+  pelletsPerShot: 6
+  spreadAngle: 10
+  baseAccuracy: 1
+  movementAccuracyPenalty: 0.5
+  recoveryRate: 0.1
+  recoilAmount: 0.1
+  recoilSpeed: 10
   muzzleFlashPrefab: {fileID: 0}
   muzzleFlashPoint: {fileID: 0}
   currentAmmo: 30
