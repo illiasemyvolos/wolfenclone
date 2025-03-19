@@ -11,7 +11,7 @@ public class Weapon : MonoBehaviour
     public int clipSize = 30;
     public int maxAmmo = 120;
     public float reloadTime = 2f;
-    public float fireRange = 50f;  
+    public float fireRange = 50f;
 
     [Header("Shotgun Settings")]
     public bool isShotgun = false;
@@ -38,7 +38,7 @@ public class Weapon : MonoBehaviour
     public int currentAmmo;
     public int totalAmmo;
 
-    [Header("Bullet Hole System")]  // ✅ Added bullet hole system
+    [Header("Bullet Hole System")]
     public GameObject bulletHolePrefab;
     public float bulletHoleLifetime = 10f;
 
@@ -49,8 +49,11 @@ public class Weapon : MonoBehaviour
 
     private void Start()
     {
-        currentAmmo = clipSize;
-        totalAmmo = maxAmmo;
+        if (currentAmmo == 0) // Ensure ammo setup during instantiation
+        {
+            currentAmmo = clipSize;
+            totalAmmo = maxAmmo;
+        }
 
         originalPosition = transform.localPosition;
         currentAccuracy = baseAccuracy;
@@ -114,7 +117,7 @@ public class Weapon : MonoBehaviour
             }
             else
             {
-                CreateBulletHole(hit);  // ✅ Create bullet hole on non-enemy surfaces
+                CreateBulletHole(hit);
             }
         }
     }
@@ -138,7 +141,7 @@ public class Weapon : MonoBehaviour
                 }
                 else
                 {
-                    CreateBulletHole(hit);  // ✅ Add bullet hole for shotgun pellets too
+                    CreateBulletHole(hit);
                 }
             }
         }
@@ -149,8 +152,8 @@ public class Weapon : MonoBehaviour
         if (bulletHolePrefab != null)
         {
             GameObject bulletHole = Instantiate(bulletHolePrefab, hit.point + (hit.normal * 0.01f), Quaternion.LookRotation(hit.normal));
-            bulletHole.transform.SetParent(hit.collider.transform); // Stick to the surface
-            Destroy(bulletHole, bulletHoleLifetime);  // Auto-cleanup
+            bulletHole.transform.SetParent(hit.collider.transform);
+            Destroy(bulletHole, bulletHoleLifetime);
         }
     }
 
@@ -256,5 +259,23 @@ public class Weapon : MonoBehaviour
             GameObject muzzleFlash = Instantiate(muzzleFlashPrefab, muzzleFlashPoint.position, muzzleFlashPoint.rotation);
             Destroy(muzzleFlash, 0.1f);
         }
+    }
+
+    // ✅ Added WeaponPickup Integration
+    public void InitializeWeaponData(string name, AmmoType type, int clipSize, int maxAmmo, int ammoAmount)
+    {
+        weaponName = name;
+        ammoType = type;
+        this.clipSize = clipSize;
+        this.maxAmmo = maxAmmo;
+
+        totalAmmo = Mathf.Min(totalAmmo + ammoAmount, maxAmmo);
+        currentAmmo = Mathf.Min(currentAmmo + ammoAmount, clipSize);
+    }
+
+    public void MergeAmmo(int ammoAmount)
+    {
+        totalAmmo = Mathf.Min(totalAmmo + ammoAmount, maxAmmo);
+        Debug.Log($"{weaponName} merged with {ammoAmount} ammo! Total ammo: {totalAmmo}");
     }
 }
