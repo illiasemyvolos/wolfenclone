@@ -5,6 +5,12 @@ using System.Collections;
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour
 {
+    [Header("Core Components")]
+    public CharacterController characterController;
+    public PlayerHealth playerHealth;
+    public PlayerArmor playerArmor;
+    public PlayerStagger playerStagger;
+
     [Header("Movement Settings")]
     public float moveSpeed = 5f;
     public float jumpHeight = 2f;
@@ -15,29 +21,16 @@ public class PlayerController : MonoBehaviour
     public Transform cameraTransform;
     private float xRotation = 0f;
 
-    [Header("Health Settings")]
-    public float maxHealth = 100f;
-    private float currentHealth;
-
-    [Header("Armor Settings")]
-    public float maxArmor = 50f;  
-    private float currentArmor;
-
-    [Header("Stagger Settings")]
-    public float staggerDuration = 1f;  
-    public float staggerSpeedMultiplier = 0.3f;
-
     [Header("UI References")]
     public DeathScreenController deathScreenController;
     public DamageScreenController damageScreenController;
 
-    public float GetCurrentHealth() => currentHealth;
-    public float GetMaxHealth() => maxHealth;
+    public float GetCurrentHealth() => playerHealth.currentHealth;
+    public float GetMaxHealth() => playerHealth.maxHealth;
 
-    public float GetCurrentArmor() => currentArmor;
-    public float GetMaxArmor() => maxArmor;
+    public float GetCurrentArmor() => playerArmor.currentArmor;
+    public float GetMaxArmor() => playerArmor.maxArmor;
 
-    private CharacterController controller;
     private Vector3 velocity;
 
     private PlayerInput playerInput;
@@ -45,11 +38,9 @@ public class PlayerController : MonoBehaviour
     private InputAction lookAction;
     private InputAction jumpAction;
 
-    private bool isStaggered = false; 
-
     private void Awake()
     {
-        controller = GetComponent<CharacterController>();
+        characterController = GetComponent<CharacterController>();
         playerInput = GetComponent<PlayerInput>();
 
         moveAction = playerInput.actions["Move"];
@@ -62,65 +53,38 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        currentHealth = maxHealth;
-        currentArmor = maxArmor;
-
-        if (deathScreenController == null)
-        {
-            deathScreenController = FindObjectOfType<DeathScreenController>();
-        }
-
-        if (damageScreenController == null)
-        {
-            damageScreenController = FindObjectOfType<DamageScreenController>();
-        }
+        playerHealth.damageScreenController = damageScreenController;
+        playerHealth.deathScreenController = deathScreenController;
     }
 
     public void TakeDamage(float damage)
     {
-        if (currentArmor > 0)
-        {
-            float remainingDamage = damage - currentArmor;
+        int remainingDamage = playerArmor.AbsorbDamage((int)damage);
+        playerHealth.TakeDamage(remainingDamage);
 
-            if (remainingDamage > 0)
-            {
-                // Armor absorbs part of the damage
-                currentArmor = 0;
-                currentHealth -= remainingDamage;
-            }
-            else
-            {
-                // Armor absorbs all damage
-                currentArmor -= damage;
-            }
-        }
-        else
+        if (!playerHealth.IsDead())
         {
-            // No armor, damage applies directly to health
-            currentHealth = Mathf.Max(currentHealth - damage, 0f);
-        }
-
-        Debug.Log($"Player took {damage} damage. Current HP: {currentHealth}, Current Armor: {currentArmor}");
-
-        if (damageScreenController != null)
-        {
-            damageScreenController.ShowDamageEffect();
-        }
-
-        if (currentHealth <= 0)
-        {
-            Debug.Log("Player has died!");
-            if (deathScreenController != null)
-            {
-                deathScreenController.ShowDeathScreen();
-            }
+            playerStagger.Stagger();
         }
     }
+    
+    public void ModifyMovementSpeed(float speedMultiplier, float duration)
+    {
+        StartCoroutine(ModifySpeedCoroutine(speedMultiplier, duration));
+    }
 
+    private IEnumerator ModifySpeedCoroutine(float speedMultiplier, float duration)
+    {
+        float originalSpeed = moveSpeed;
+        moveSpeed *= speedMultiplier;
+
+        yield return new WaitForSeconds(duration);
+
+        moveSpeed = originalSpeed;
+    }
     public void AddArmor(float armorAmount)
     {
-        currentArmor = Mathf.Clamp(currentArmor + armorAmount, 0, maxArmor);
-        Debug.Log($"🛡️ Armor Restored: {armorAmount} | Current Armor: {currentArmor}");
+        playerArmor.AddArmor((int)armorAmount);
     }
 
     private void Update()
@@ -146,10 +110,10 @@ public class PlayerController : MonoBehaviour
     {
         Vector2 input = moveAction.ReadValue<Vector2>();
         Vector3 move = transform.right * input.x + transform.forward * input.y;
-        controller.Move(move * moveSpeed * Time.deltaTime);
+        characterController.Move(move * moveSpeed * Time.deltaTime);
 
         velocity.y += gravity * Time.deltaTime;
-        controller.Move(velocity * Time.deltaTime);
+        characterController.Move(velocity * Time.deltaTime);
     }
 
     void HandleLook()
@@ -165,7 +129,7 @@ public class PlayerController : MonoBehaviour
 
     void HandleJump()
     {
-        if (controller.isGrounded)
+        if (characterController.isGrounded)
         {
             velocity.y = -2f;
 
@@ -178,34 +142,6 @@ public class PlayerController : MonoBehaviour
 
     public void RestoreHealth(float amount)
     {
-        if (currentHealth < maxHealth)
-        {
-            currentHealth = Mathf.Min(currentHealth + amount, maxHealth);
-            Debug.Log($"💉 Player healed for {amount} HP. Current HP: {currentHealth}");
-        }
-    }
-
-    public void Stagger()
-    {
-        if (!isStaggered)
-        {
-            StartCoroutine(StaggerCoroutine());
-        }
-    }
-
-    private IEnumerator StaggerCoroutine()
-    {
-        isStaggered = true;
-        Debug.Log("💥 Player staggered!");
-
-        float originalSpeed = moveSpeed;
-        moveSpeed *= staggerSpeedMultiplier;
-
-        yield return new WaitForSeconds(staggerDuration);
-
-        moveSpeed = originalSpeed;
-        isStaggered = false;
-
-        Debug.Log("✅ Player recovered from stagger.");
+        playerHealth.Heal((int)amount);
     }
 }

@@ -5766,7 +5766,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1264064264
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6900,6 +6900,11 @@ Light:
   m_LightUnit: 1
   m_LuxAtDistance: 1
   m_EnableSpotReflector: 1
+--- !u!1 &1550689609 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1577044108429120352, guid: 172e1d101436d4c218568402ae0ed437, type: 3}
+  m_PrefabInstance: {fileID: 1384869413705876498}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1557452564
 GameObject:
   m_ObjectHideFlags: 0
@@ -8953,7 +8958,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2375408482324792647, guid: 172e1d101436d4c218568402ae0ed437, type: 3}
   m_PrefabInstance: {fileID: 1384869413705876498}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1550689609}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f7cbc7530e44c46a2a053e8f2174169d, type: 3}
@@ -8964,12 +8969,61 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3560862372878129154, guid: 172e1d101436d4c218568402ae0ed437, type: 3}
   m_PrefabInstance: {fileID: 1384869413705876498}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1550689609}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ed509d4cc311d4c55971217e6625ecfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!143 &2081083022 stripped
+CharacterController:
+  m_CorrespondingSourceObject: {fileID: 3777617745813146855, guid: 172e1d101436d4c218568402ae0ed437, type: 3}
+  m_PrefabInstance: {fileID: 1384869413705876498}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2081083024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1550689609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: daed9026a8ec4447c959da0f26924690, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  staggerDuration: 0
+  staggerSpeedReduction: 0
+--- !u!114 &2081083025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1550689609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16b92c574b14640308cf4896b254c042, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  currentHealth: 50
+  damageScreenController: {fileID: 233252465}
+  deathScreenController: {fileID: 2114592815}
+--- !u!114 &2081083026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1550689609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2b1773ad6be2443aa488cf745ee36f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxArmor: 50
+  currentArmor: 0
 --- !u!1 &2110106141
 GameObject:
   m_ObjectHideFlags: 0
@@ -9235,6 +9289,22 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2029373245689763411, guid: f68be89c3d8d447a7b1f3a0d3e774f75, type: 3}
     - target: {fileID: 3560862372878129154, guid: 172e1d101436d4c218568402ae0ed437, type: 3}
+      propertyPath: playerArmor
+      value: 
+      objectReference: {fileID: 2081083026}
+    - target: {fileID: 3560862372878129154, guid: 172e1d101436d4c218568402ae0ed437, type: 3}
+      propertyPath: playerHealth
+      value: 
+      objectReference: {fileID: 2081083025}
+    - target: {fileID: 3560862372878129154, guid: 172e1d101436d4c218568402ae0ed437, type: 3}
+      propertyPath: playerStagger
+      value: 
+      objectReference: {fileID: 2081083024}
+    - target: {fileID: 3560862372878129154, guid: 172e1d101436d4c218568402ae0ed437, type: 3}
+      propertyPath: characterController
+      value: 
+      objectReference: {fileID: 2081083022}
+    - target: {fileID: 3560862372878129154, guid: 172e1d101436d4c218568402ae0ed437, type: 3}
       propertyPath: deathScreenController
       value: 
       objectReference: {fileID: 2114592815}
@@ -9300,7 +9370,16 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8143380189422328367, guid: 172e1d101436d4c218568402ae0ed437, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1879088968}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1577044108429120352, guid: 172e1d101436d4c218568402ae0ed437, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2081083026}
+    - targetCorrespondingSourceObject: {fileID: 1577044108429120352, guid: 172e1d101436d4c218568402ae0ed437, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2081083025}
+    - targetCorrespondingSourceObject: {fileID: 1577044108429120352, guid: 172e1d101436d4c218568402ae0ed437, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2081083024}
   m_SourcePrefab: {fileID: 100100000, guid: 172e1d101436d4c218568402ae0ed437, type: 3}
 --- !u!114 &1384869413705876499 stripped
 MonoBehaviour:
