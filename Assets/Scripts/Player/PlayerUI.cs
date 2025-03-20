@@ -70,7 +70,16 @@ public class PlayerUI : MonoBehaviour
 
     private void UpdateWeaponInfo()
     {
-        if (weaponManager == null) return;
+        // ✅ Added Safety Checks for Out-of-Range Protection
+        if (weaponManager == null || 
+            weaponManager.weapons.Count == 0 || 
+            weaponManager.currentWeaponIndex < 0 || 
+            weaponManager.currentWeaponIndex >= weaponManager.weapons.Count)
+        {
+            if (weaponNameText != null) weaponNameText.text = "No Weapon";
+            if (ammoText != null) ammoText.text = "Ammo: 0 / 0";
+            return;
+        }
 
         Weapon currentWeapon = weaponManager.weapons[weaponManager.currentWeaponIndex];
 

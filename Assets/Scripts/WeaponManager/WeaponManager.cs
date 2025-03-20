@@ -123,7 +123,6 @@ public class WeaponManager : MonoBehaviour
         {
             if (weapon.weaponName == newWeaponPrefab.weaponName)
             {
-                // Weapon exists — merge ammo
                 weapon.MergeAmmo(ammoAmount);
                 Debug.Log($"{weapon.weaponName} merged with {ammoAmount} ammo.");
                 return;
@@ -158,12 +157,13 @@ public class WeaponManager : MonoBehaviour
         newWeaponInstance.gameObject.SetActive(false); // Keep deactivated before switching
         weapons.Add(newWeaponInstance);
 
-        // ✅ Switch to the new weapon automatically
-        currentWeaponIndex = weapons.Count - 1;  // Update to the newly added weapon
+        // ✅ Correct Weapon Index Handling
+        currentWeaponIndex = Mathf.Clamp(weapons.Count - 1, 0, weapons.Count - 1);
         SelectWeapon(currentWeaponIndex);
 
         Debug.Log($"New weapon added: {newWeaponInstance.weaponName} with {ammoAmount} ammo.");
     }
+
 
 
 }
