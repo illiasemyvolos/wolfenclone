@@ -1262,6 +1262,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponPrefab: {fileID: 138739137}
+  weaponData: {fileID: 11400000, guid: 99c4286cdc55241f187e73768e951491, type: 2}
   ammoAmount: 6
 --- !u!65 &254698559
 BoxCollider:
@@ -3493,6 +3494,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponPrefab: {fileID: 1879088967}
+  weaponData: {fileID: 11400000, guid: b013b6adc900b4bafa6a831a7cd45ab0, type: 2}
   ammoAmount: 8
 --- !u!65 &882189748
 BoxCollider:
@@ -5766,7 +5768,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1264064264
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6938,6 +6940,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponPrefab: {fileID: 1384869413705876499}
+  weaponData: {fileID: 11400000, guid: 0d834d86513b44ad0a8ab4b32ab50ca6, type: 2}
   ammoAmount: 30
 --- !u!65 &1557452566
 BoxCollider:
@@ -8254,28 +8257,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1c5baf983109492d9f85691aa773797, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponName: ShotGun
-  ammoType: 2
-  fireRate: 0.3
-  damage: 10
-  clipSize: 8
-  maxAmmo: 40
-  reloadTime: 4
-  fireRange: 15
-  isShotgun: 1
-  pelletsPerShot: 8
-  spreadAngle: 20
-  baseAccuracy: 0.64
-  movementAccuracyPenalty: 0.38
-  recoveryRate: 0.1
-  recoilAmount: 0.04
-  recoilSpeed: 10
-  muzzleFlashPrefab: {fileID: 1720926840074690270, guid: 635c7ba12c2994fe885e1fb00c6dbd15, type: 3}
-  muzzleFlashPoint: {fileID: 128829767}
+  weaponData: {fileID: 11400000, guid: b013b6adc900b4bafa6a831a7cd45ab0, type: 2}
   currentAmmo: 120
   totalAmmo: 120
-  bulletHolePrefab: {fileID: 2029373245689763411, guid: f68be89c3d8d447a7b1f3a0d3e774f75, type: 3}
-  bulletHoleLifetime: 10
 --- !u!4 &1879088968
 Transform:
   m_ObjectHideFlags: 0
@@ -9261,6 +9245,10 @@ PrefabInstance:
       value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 2339936182936681386, guid: 172e1d101436d4c218568402ae0ed437, type: 3}
+      propertyPath: weaponData
+      value: 
+      objectReference: {fileID: 11400000, guid: 99c4286cdc55241f187e73768e951491, type: 2}
+    - target: {fileID: 2339936182936681386, guid: 172e1d101436d4c218568402ae0ed437, type: 3}
       propertyPath: bulletHolePrefab
       value: 
       objectReference: {fileID: 2029373245689763411, guid: f68be89c3d8d447a7b1f3a0d3e774f75, type: 3}
@@ -9284,6 +9272,10 @@ PrefabInstance:
       propertyPath: 'weapons.Array.data[2]'
       value: 
       objectReference: {fileID: 1879088967}
+    - target: {fileID: 2838332842957878688, guid: 172e1d101436d4c218568402ae0ed437, type: 3}
+      propertyPath: weaponData
+      value: 
+      objectReference: {fileID: 11400000, guid: 0d834d86513b44ad0a8ab4b32ab50ca6, type: 2}
     - target: {fileID: 2838332842957878688, guid: 172e1d101436d4c218568402ae0ed437, type: 3}
       propertyPath: bulletHolePrefab
       value: 

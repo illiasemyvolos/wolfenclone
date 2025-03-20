@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class WeaponManager : MonoBehaviour
 {
     [Header("Weapons")]
-    public List<Weapon> weapons = new List<Weapon>();  // Changed to List for dynamic expansion
+    public List<Weapon> weapons = new List<Weapon>();
     public int currentWeaponIndex = 0;
     public Transform weaponHolder;
 
@@ -74,17 +74,17 @@ public class WeaponManager : MonoBehaviour
     {
         foreach (Weapon weapon in weapons)
         {
-            if (weapon.ammoType == ammoType)
+            if (weapon.weaponData.ammoType == ammoType)
             {
                 if (!weapon.IsAmmoFull())
                 {
                     weapon.AddAmmo(amount);
-                    Debug.Log($"{weapon.weaponName} received {amount} ammo.");
+                    Debug.Log($"{weapon.weaponData.weaponName} received {amount} ammo.");
                     return true;  // ✅ Successfully added ammo
                 }
                 else
                 {
-                    Debug.Log($"{weapon.weaponName} ammo is already full.");
+                    Debug.Log($"{weapon.weaponData.weaponName} ammo is already full.");
                     return false; // ❌ Ammo full, no pickup
                 }
             }
@@ -112,30 +112,27 @@ public class WeaponManager : MonoBehaviour
     void SelectWeapon(int index)
     {
         weapons[index].gameObject.SetActive(true);  // ✅ Ensure weapon activates
-        Debug.Log($"Switched to {weapons[index].weaponName}");
+        Debug.Log($"Switched to {weapons[index].weaponData.weaponName}");
     }
 
     // ✅ New Method: Add Weapon or Merge Ammo
     public void AddOrMergeWeapon(Weapon newWeaponPrefab, int ammoAmount)
     {
-        // Check if the weapon already exists
         foreach (Weapon weapon in weapons)
         {
-            if (weapon.weaponName == newWeaponPrefab.weaponName)
+            if (weapon.weaponData.weaponName == newWeaponPrefab.weaponData.weaponName)
             {
                 weapon.MergeAmmo(ammoAmount);
-                Debug.Log($"{weapon.weaponName} merged with {ammoAmount} ammo.");
+                Debug.Log($"{weapon.weaponData.weaponName} merged with {ammoAmount} ammo.");
                 return;
             }
         }
 
-        // ✅ Deactivate the current weapon before switching
         if (weapons.Count > 0)
         {
             weapons[currentWeaponIndex].gameObject.SetActive(false);
         }
 
-        // Weapon does not exist — instantiate and add
         Weapon newWeaponInstance = Instantiate(
             newWeaponPrefab,
             weaponHolder.position,
@@ -143,27 +140,18 @@ public class WeaponManager : MonoBehaviour
             weaponHolder
         );
 
-        newWeaponInstance.InitializeWeaponData(
-            newWeaponPrefab.weaponName,
-            newWeaponPrefab.ammoType,
-            newWeaponPrefab.clipSize,
-            newWeaponPrefab.maxAmmo,
-            ammoAmount
-        );
+        newWeaponInstance.InitializeWeaponData(newWeaponPrefab.weaponData, ammoAmount);
+
 
         newWeaponInstance.transform.localPosition = Vector3.zero;
         newWeaponInstance.transform.localRotation = Quaternion.identity;
 
-        newWeaponInstance.gameObject.SetActive(false); // Keep deactivated before switching
+        newWeaponInstance.gameObject.SetActive(false); 
         weapons.Add(newWeaponInstance);
 
-        // ✅ Correct Weapon Index Handling
         currentWeaponIndex = Mathf.Clamp(weapons.Count - 1, 0, weapons.Count - 1);
         SelectWeapon(currentWeaponIndex);
 
-        Debug.Log($"New weapon added: {newWeaponInstance.weaponName} with {ammoAmount} ammo.");
+        Debug.Log($"New weapon added: {newWeaponInstance.weaponData.weaponName} with {ammoAmount} ammo.");
     }
-
-
-
 }

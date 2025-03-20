@@ -476,28 +476,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1c5baf983109492d9f85691aa773797, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponName: MP45
-  ammoType: 1
-  fireRate: 0.1
-  damage: 5
-  clipSize: 30
-  maxAmmo: 120
-  reloadTime: 2
-  fireRange: 50
-  isShotgun: 0
-  pelletsPerShot: 6
-  spreadAngle: 10
-  baseAccuracy: 0.76
-  movementAccuracyPenalty: 0.44
-  recoveryRate: 0.1
-  recoilAmount: 0.02
-  recoilSpeed: 10
-  muzzleFlashPrefab: {fileID: 1720926840074690270, guid: 635c7ba12c2994fe885e1fb00c6dbd15, type: 3}
-  muzzleFlashPoint: {fileID: 936477690126053752}
+  weaponData: {fileID: 11400000, guid: 0d834d86513b44ad0a8ab4b32ab50ca6, type: 2}
   currentAmmo: 120
   totalAmmo: 120
-  bulletHolePrefab: {fileID: 2029373245689763411, guid: f68be89c3d8d447a7b1f3a0d3e774f75, type: 3}
-  bulletHoleLifetime: 10
 --- !u!1 &4351523985070790039
 GameObject:
   m_ObjectHideFlags: 0

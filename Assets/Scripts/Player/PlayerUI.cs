@@ -85,7 +85,7 @@ public class PlayerUI : MonoBehaviour
 
         if (weaponNameText != null && ammoText != null)
         {
-            weaponNameText.text = currentWeapon.weaponName;
+            weaponNameText.text = currentWeapon.weaponData.weaponName;
             ammoText.text = $"{currentWeapon.currentAmmo} / {currentWeapon.totalAmmo}";
         }
     }

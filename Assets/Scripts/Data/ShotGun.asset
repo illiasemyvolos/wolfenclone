@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9afad16f109348d5bfd34f6421d1512, type: 3}
+  m_Name: ShotGun
+  m_EditorClassIdentifier: 
+  weaponName: Mosberg
+  ammoType: 0
+  damage: 15
+  fireRate: 0.4
+  clipSize: 8
+  maxAmmo: 40
+  reloadTime: 4
+  fireRange: 20
+  shotgunSettings:
+    isShotgun: 1
+    pelletsPerShot: 8
+    spreadAngle: 30
+  accuracyAndRecoil:
+    baseAccuracy: 0.56
+    movementAccuracyPenalty: 0.41
+    accuracyRecoveryRate: 0.14
+    recoilAmount: 0.59
+    recoilSpeed: 2.3
+  spreadMultiplier: 1
+  muzzleFlashPrefab: {fileID: 1720926840074690270, guid: 635c7ba12c2994fe885e1fb00c6dbd15, type: 3}
+  bulletHolePrefab: {fileID: 2029373245689763411, guid: f68be89c3d8d447a7b1f3a0d3e774f75, type: 3}
+  bulletHoleLifetime: 10
