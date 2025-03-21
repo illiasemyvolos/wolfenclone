@@ -441,7 +441,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4475655430081776348}
   - component: {fileID: 7008471949530619173}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: SMGPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}

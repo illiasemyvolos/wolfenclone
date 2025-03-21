@@ -36,12 +36,22 @@ public class WeaponData : ScriptableObject
     [Header("Shotgun Settings")]
     public ShotgunSettings shotgunSettings;
 
+    [Header("Fire Mode Settings")]
+    public bool isAutoFire = false; // 🔥 Auto-fire toggle (true = hold to shoot)
+    
     [Header("Accuracy & Recoil")]
     public AccuracyAndRecoil accuracyAndRecoil;
     
     [Header("Spread Settings")]
     [Range(0f, 5f)] public float spreadMultiplier = 1f;  // New spread control
+    
+    [Header("Weapon Sway Settings")]
+    [Range(0f, 0.1f)] public float swayAmount = 0.02f;        // 🔄 Amount of horizontal sway
+    [Range(1f, 10f)] public float swaySpeed = 4f;             // ⏳ Speed of sway
+    [Range(5f, 20f)] public float swaySmoothness = 10f;       // ⚙️ Smooths sway movement
 
+    [Header("Muzzle Flash Settings")]
+    public Vector3 muzzleFlashOffset = Vector3.zero; // 🔥 Adjustable offset for muzzle position
 
     [Header("Effects")]
     public GameObject muzzleFlashPrefab;

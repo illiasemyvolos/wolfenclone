@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.InputSystem;
 
 public class Weapon : MonoBehaviour
 {
@@ -12,11 +13,19 @@ public class Weapon : MonoBehaviour
     [Header("Ammo Management")]
     public int currentAmmo;
     public int totalAmmo;
-
+    
+    [Header("Muzzle Flash Settings")]
+    public Transform muzzleFlashPoint; // ✅ Reference for the muzzle flash position
+    
+    [Header("Input System Reference")]
+    private PlayerInput playerInput;
+    private InputAction fireAction;
+    
     private float currentAccuracy;
     private float nextFireTime;
     private Vector3 originalPosition;
     private bool isReloading = false;
+    private Coroutine reloadCoroutine;
 
     private void Start()
     {
@@ -30,6 +39,17 @@ public class Weapon : MonoBehaviour
         originalPosition = transform.localPosition;
         currentAccuracy = weaponData.accuracyAndRecoil.baseAccuracy;
 
+        // ✅ Apply muzzle flash offset adjustment
+        if (muzzleFlashPoint != null)
+        {
+            muzzleFlashPoint.localPosition += weaponData.muzzleFlashOffset;
+            Debug.Log($"✅ Muzzle flash position adjusted by {weaponData.muzzleFlashOffset} for {weaponData.weaponName}");
+        }
+        else
+        {
+            Debug.LogWarning("⚠️ MuzzleFlashPoint not assigned — offset skipped.");
+        }
+
         InitializationManager initManager = FindObjectOfType<InitializationManager>();
         playerUI = initManager?.playerUI;
 
@@ -39,16 +59,41 @@ public class Weapon : MonoBehaviour
         }
     }
 
+
     private void InitializeWeaponFromData()
     {
         currentAmmo = weaponData.clipSize;
         totalAmmo = weaponData.maxAmmo;
     }
 
+    private void Awake()
+    {
+        playerInput = GetComponentInParent<PlayerInput>(); // Ensure this references the correct player
+        fireAction = playerInput.actions["Player/Fire"];   // Match this to your Input System mapping
+    }
+
     private void Update()
     {
         RecoverAccuracy();
+        ApplyWeaponSway(); // 🔄 Add sway logic to Update()
+
+        // 🔥 Auto-Fire Logic with Input System
+        if (weaponData.isAutoFire && fireAction.IsPressed()) 
+        {
+            if (CanShoot()) 
+            {
+                Shoot();
+            }
+        }
+        else if (!weaponData.isAutoFire && fireAction.triggered)
+        {
+            if (CanShoot()) 
+            {
+                Shoot();
+            }
+        }
     }
+
 
     public bool CanShoot()
     {
@@ -149,9 +194,7 @@ public class Weapon : MonoBehaviour
 
         ShowMuzzleFlash();
     }
-
-
-
+    
     private void CreateBulletHole(RaycastHit hit)
     {
         if (weaponData.bulletHolePrefab != null)
@@ -211,7 +254,7 @@ public class Weapon : MonoBehaviour
         int ammoNeeded = weaponData.clipSize - currentAmmo;
         if (totalAmmo <= 0 || ammoNeeded == 0) return;
 
-        StartCoroutine(ReloadCoroutine(ammoNeeded));
+        reloadCoroutine = StartCoroutine(ReloadCoroutine(ammoNeeded));
     }
 
     private IEnumerator ReloadCoroutine(int ammoNeeded)
@@ -235,6 +278,24 @@ public class Weapon : MonoBehaviour
         }
 
         isReloading = false;
+    }
+
+// 🔄 New Method: Stop Reload Coroutine
+    public void StopReload()
+    {
+        if (reloadCoroutine != null)
+        {
+            StopCoroutine(reloadCoroutine);
+            reloadCoroutine = null;
+
+            if (playerUI != null)
+            {
+                playerUI.ShowReloadingText(false); // Ensure "reloading" text disappears
+            }
+
+            isReloading = false; // ✅ Ensure reloading state resets
+            Debug.Log($"🛑 Reload canceled on {weaponData.weaponName}");
+        }
     }
 
     private IEnumerator ApplyRecoil()
@@ -304,10 +365,43 @@ public class Weapon : MonoBehaviour
 
     private void ShowMuzzleFlash()
     {
-        if (weaponData.muzzleFlashPrefab)
+        if (weaponData.muzzleFlashPrefab && muzzleFlashPoint)
         {
-            GameObject muzzleFlash = Instantiate(weaponData.muzzleFlashPrefab, transform.position, transform.rotation);
-            Destroy(muzzleFlash, 0.1f);
+            GameObject muzzleFlash = Instantiate(
+                weaponData.muzzleFlashPrefab,         // Prefab reference
+                muzzleFlashPoint.position,            // ✅ Exact position of muzzle flash point
+                muzzleFlashPoint.rotation             // ✅ Same rotation as muzzle flash point
+            );
+
+            muzzleFlash.transform.SetParent(muzzleFlashPoint); // ✅ Optional: Attach for smoother control
+            Destroy(muzzleFlash, 0.1f); // Auto-destroy after visual effect completes
+        }
+        else
+        {
+            Debug.LogWarning("⚠️ Muzzle Flash Prefab or Muzzle Flash Point missing.");
         }
     }
+    
+    private void ApplyWeaponSway()
+    {
+        // Get player movement input
+        float movementX = Input.GetAxis("Horizontal"); // A/D or Left Stick X-axis
+        float movementY = Input.GetAxis("Vertical");   // W/S or Left Stick Y-axis
+
+        // Calculate sway position
+        float swayX = Mathf.Sin(Time.time * weaponData.swaySpeed) * weaponData.swayAmount * movementX;
+        float swayY = Mathf.Sin(Time.time * weaponData.swaySpeed * 0.5f) * weaponData.swayAmount * movementY;
+
+        // Calculate target position for smoother transition
+        Vector3 targetPosition = new Vector3(swayX, swayY, 0);
+
+        // Smoothly interpolate towards the target position
+        transform.localPosition = Vector3.Lerp(
+            transform.localPosition, 
+            originalPosition + targetPosition, 
+            Time.deltaTime * weaponData.swaySmoothness
+        );
+    }
+
+
 }

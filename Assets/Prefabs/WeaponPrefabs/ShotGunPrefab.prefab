@@ -41,7 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7200626111657629767}
   - component: {fileID: 6611197861320930150}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: ShotGunPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}

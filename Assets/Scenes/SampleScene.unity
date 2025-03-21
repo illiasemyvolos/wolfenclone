@@ -684,7 +684,7 @@ GameObject:
   m_Component:
   - component: {fileID: 128829767}
   m_Layer: 0
-  m_Name: muzzleFlashSMG
+  m_Name: muzzleFlashShotGun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5227,6 +5227,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1147503514}
   m_CullTransparentMesh: 1
+--- !u!1 &1148218284 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1334297698278644308, guid: 172e1d101436d4c218568402ae0ed437, type: 3}
+  m_PrefabInstance: {fileID: 1384869413705876498}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1174349421
 GameObject:
   m_ObjectHideFlags: 0
@@ -8042,6 +8047,25 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8143380189422328367, guid: 172e1d101436d4c218568402ae0ed437, type: 3}
   m_PrefabInstance: {fileID: 1384869413705876498}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1817442715
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1148218284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1c287b07b33a43bf9f49d201db3cc56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponHolder: {fileID: 1817442714}
+  pushbackDistance: 1
+  detectionRange: 2
+  pushbackSpeed: 10
+  environmentLayer:
+    serializedVersion: 2
+    m_Bits: 1024
 --- !u!1 &1850754656
 GameObject:
   m_ObjectHideFlags: 0
@@ -8238,7 +8262,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1879088968}
   - component: {fileID: 1879088967}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: ShotGun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8260,6 +8284,7 @@ MonoBehaviour:
   weaponData: {fileID: 11400000, guid: b013b6adc900b4bafa6a831a7cd45ab0, type: 2}
   currentAmmo: 120
   totalAmmo: 120
+  muzzleFlashPoint: {fileID: 128829767}
 --- !u!4 &1879088968
 Transform:
   m_ObjectHideFlags: 0
@@ -9233,6 +9258,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 462226343148225210, guid: 172e1d101436d4c218568402ae0ed437, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 462226343148225210, guid: 172e1d101436d4c218568402ae0ed437, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -9345,6 +9374,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7406523040072348491, guid: 172e1d101436d4c218568402ae0ed437, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 7406523040072348491, guid: 172e1d101436d4c218568402ae0ed437, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -9372,6 +9405,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1577044108429120352, guid: 172e1d101436d4c218568402ae0ed437, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2081083024}
+    - targetCorrespondingSourceObject: {fileID: 1334297698278644308, guid: 172e1d101436d4c218568402ae0ed437, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1817442715}
   m_SourcePrefab: {fileID: 100100000, guid: 172e1d101436d4c218568402ae0ed437, type: 3}
 --- !u!114 &1384869413705876499 stripped
 MonoBehaviour:

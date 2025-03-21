@@ -98,6 +98,9 @@ public class WeaponManager : MonoBehaviour
     {
         if (weapons.Count == 0) return; // ✅ Prevent switching error when no weapons exist
 
+        // 🔄 Stop Reload on Current Weapon Before Switching
+        weapons[currentWeaponIndex].StopReload();
+
         weapons[currentWeaponIndex].gameObject.SetActive(false);
         currentWeaponIndex += direction;
 
@@ -108,6 +111,7 @@ public class WeaponManager : MonoBehaviour
 
         SelectWeapon(currentWeaponIndex);
     }
+
 
     void SelectWeapon(int index)
     {
