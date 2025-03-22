@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{521ce4ad-1428-f2e0-da90-ef38cc27f498}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OccaSoftware.Crosshairs.Editor", "OccaSoftware.Crosshairs.Editor.csproj", "{dadb7021-4f42-700c-a9c7-a494e713ff16}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -10,6 +12,8 @@ Global
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{521ce4ad-1428-f2e0-da90-ef38cc27f498}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{521ce4ad-1428-f2e0-da90-ef38cc27f498}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{dadb7021-4f42-700c-a9c7-a494e713ff16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{dadb7021-4f42-700c-a9c7-a494e713ff16}.Debug|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
