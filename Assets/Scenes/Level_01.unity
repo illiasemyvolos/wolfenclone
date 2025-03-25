@@ -12484,6 +12484,7 @@ GameObject:
   - component: {fileID: 1552662193}
   - component: {fileID: 1552662192}
   - component: {fileID: 1552662191}
+  - component: {fileID: 1552662201}
   m_Layer: 7
   m_Name: Enemy_X
   m_TagString: Enemy
@@ -12713,6 +12714,23 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1552662189}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1552662201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1552662189}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04d8590bcb4eb4b7e9be4d461ecc884f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 50
+  deathEffect: {fileID: 0}
+  deathSound: {fileID: 0}
+  destroyOnDeath: 1
+  destroyDelay: 2
 --- !u!4 &1557452569 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8977009639613019525, guid: 67d50857c79554a869c0cede3ad74118, type: 3}
