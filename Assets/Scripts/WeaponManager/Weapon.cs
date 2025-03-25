@@ -141,10 +141,10 @@ public class Weapon : MonoBehaviour
         {
             if (hit.collider.CompareTag("Enemy"))
             {
-                EnemyHealth enemyHealth = hit.collider.GetComponent<EnemyHealth>();
-                if (enemyHealth != null)
+                EnemyHP enemyHP = hit.collider.GetComponent<EnemyHP>();
+                if (enemyHP != null)
                 {
-                    enemyHealth.TakeDamage(weaponData.damage);
+                    enemyHP.TakeDamage((int)weaponData.damage); // 👈 Cast if damage is float
                     Debug.Log($"Hit {hit.collider.gameObject.name} for {weaponData.damage} damage.");
                 }
             }
@@ -178,11 +178,11 @@ public class Weapon : MonoBehaviour
             {
                 if (hit.collider.CompareTag("Enemy"))
                 {
-                    EnemyHealth enemyHealth = hit.collider.GetComponent<EnemyHealth>();
-                    if (enemyHealth != null)
+                    EnemyHP enemyHP = hit.collider.GetComponent<EnemyHP>();
+                    if (enemyHP != null)
                     {
-                        enemyHealth.TakeDamage(weaponData.damage / 2);
-                        Debug.Log($"Shotgun pellet hit {hit.collider.gameObject.name} for {weaponData.damage / 2} damage.");
+                        enemyHP.TakeDamage((int)(weaponData.damage / 2f)); // 👈 Half-damage per pellet
+                        Debug.Log($"Shotgun pellet hit {hit.collider.gameObject.name} for {weaponData.damage / 2f} damage.");
                     }
                 }
                 else
