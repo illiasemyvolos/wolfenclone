@@ -12,7 +12,10 @@ public class AIController : MonoBehaviour
     [HideInInspector] public AICombat combat;
 
     [Header("AI Settings")]
-    public float decisionRate = 0.2f; // How often the AI updates logic
+    public float decisionRate = 0.2f;
+
+    [Header("AI Behavior Data")]
+    public AIBehaviorData behaviorData;
 
     private float decisionTimer;
 
@@ -25,13 +28,12 @@ public class AIController : MonoBehaviour
 
     private void Start()
     {
-        ChangeState(new AIPatrolState(this)); // Default to patrol for now
+        ChangeState(new AIPatrolState(this));
     }
 
     private void Update()
     {
         decisionTimer -= Time.deltaTime;
-
         if (decisionTimer <= 0f)
         {
             decisionTimer = decisionRate;
@@ -46,8 +48,5 @@ public class AIController : MonoBehaviour
         currentState?.Enter();
     }
 
-    public AIState GetCurrentState()
-    {
-        return currentState;
-    }
+    public AIState GetCurrentState() => currentState;
 }

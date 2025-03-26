@@ -12575,6 +12575,7 @@ MonoBehaviour:
   movement: {fileID: 0}
   combat: {fileID: 0}
   decisionRate: 0.2
+  behaviorData: {fileID: 11400000, guid: 23bc59feddd804bf686605ba6b2391f8, type: 2}
 --- !u!114 &1552662193
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12587,12 +12588,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b63aa80b2eb8408ea08cb17f530d9d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackRange: 20
-  fireRate: 2
-  damage: 5
-  hitMask:
-    serializedVersion: 2
-    m_Bits: 64
   projectilePrefab: {fileID: 3915512058581278965, guid: 718ec40f567a04c7a92c5035a10defdf, type: 3}
   firePoint: {fileID: 283873988}
 --- !u!114 &1552662194
@@ -12607,7 +12602,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24df9ef5e01da4a72b078ab55a274834, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stoppingDistance: 1
 --- !u!114 &1552662195
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12620,8 +12614,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 575efc2ea11db41ada7eeeb0e6aeb972, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  viewRadius: 20
-  viewAngle: 150
   playerMask:
     serializedVersion: 2
     m_Bits: 64

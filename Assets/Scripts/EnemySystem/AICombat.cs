@@ -3,16 +3,10 @@ using UnityEngine;
 [RequireComponent(typeof(AIController))]
 public class AICombat : MonoBehaviour
 {
-    [Header("Combat Settings")]
-    public float attackRange = 10f;
-    public float fireRate = 1f;
-    public float damage = 10f;
-    public LayerMask hitMask;
-
     [Header("Projectile Settings")]
     public GameObject projectilePrefab;
     public Transform firePoint;
-    
+
     private float fireCooldown = 0f;
     private Transform player;
     private AIController ai;
@@ -35,7 +29,7 @@ public class AICombat : MonoBehaviour
             return false;
 
         float distance = Vector3.Distance(transform.position, player.position);
-        return distance <= attackRange;
+        return distance <= ai.behaviorData.attackRange;
     }
 
     public void Attack()
@@ -43,20 +37,24 @@ public class AICombat : MonoBehaviour
         if (player == null || fireCooldown > 0f || projectilePrefab == null || firePoint == null)
             return;
 
-        fireCooldown = 1f / fireRate;
+        // If AI is not ranged, do not fire projectiles
+        if (!ai.behaviorData.isRanged)
+            return;
 
-        // Ensure the firePoint is facing the player
+        fireCooldown = 1f / ai.behaviorData.fireRate;
+
+        // Face the player
         ai.movement.LookAt(player.position);
 
-        // Instantiate projectile using firePoint's rotation (accurate!)
+        // Spawn projectile using firePoint's direction
         GameObject projectile = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
 
         EnemyProjectile proj = projectile.GetComponent<EnemyProjectile>();
         if (proj != null)
         {
-            proj.damage = (int)damage;
+            proj.damage = (int)ai.behaviorData.damage;
         }
 
-        // Optional: play VFX or SFX here
+        // Optional: add burst fire logic here in future
     }
 }

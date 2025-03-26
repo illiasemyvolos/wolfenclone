@@ -3,12 +3,15 @@ using UnityEngine;
 public class AISearchState : AIState
 {
     private Vector3 searchPosition;
-    private float searchDuration = 3f;
     private float searchTimer;
+    private float searchDuration;
+    private float rotationSpeed;
 
     public AISearchState(AIController ai, Vector3 lastKnownPosition) : base(ai)
     {
         searchPosition = lastKnownPosition;
+        searchDuration = ai.behaviorData.searchDuration;
+        rotationSpeed = ai.behaviorData.searchRotationSpeed;
     }
 
     public override void Enter()
@@ -19,22 +22,18 @@ public class AISearchState : AIState
 
     public override void Update()
     {
-        // If we see the player again, chase!
         if (ai.senses.CanSeePlayer())
         {
             ai.ChangeState(new AIChaseState(ai));
             return;
         }
 
-        // Wait until reaching the spot
         if (!ai.movement.IsAtDestination())
             return;
 
-        // Rotate to simulate searching
-        ai.transform.Rotate(0f, 60f * Time.deltaTime, 0f);
-
-        // Countdown
+        ai.transform.Rotate(0f, rotationSpeed * Time.deltaTime, 0f);
         searchTimer -= Time.deltaTime;
+
         if (searchTimer <= 0f)
         {
             ai.ChangeState(new AIPatrolState(ai));
