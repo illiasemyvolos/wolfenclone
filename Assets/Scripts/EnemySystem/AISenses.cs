@@ -4,7 +4,9 @@ public class AISenses : MonoBehaviour
 {
     [Header("Vision Settings")]
     public float viewRadius = 15f;
-    [Range(0, 360)] public float viewAngle = 120f;
+
+    [Range(0, 360)]
+    public float viewAngle = 120f;
 
     public LayerMask playerMask;
     public LayerMask obstructionMask;
@@ -24,26 +26,30 @@ public class AISenses : MonoBehaviour
         Vector3 directionToPlayer = (player.position - transform.position).normalized;
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
-        // Check distance
+        // Distance check
         if (distanceToPlayer > viewRadius)
             return false;
 
-        // Check FOV angle
-        float angle = Vector3.Angle(transform.forward, directionToPlayer);
-        if (angle > viewAngle / 2f)
+        // FOV check
+        float angleToPlayer = Vector3.Angle(transform.forward, directionToPlayer);
+        if (angleToPlayer > viewAngle / 2f)
             return false;
 
-        // ✅ Check for LOS (line of sight)
-        Vector3 eyePos = transform.position + Vector3.up * 1.5f; // Eye height
-        Vector3 playerPos = player.position + Vector3.up * 1f;
+        // Line of sight raycast
+        Vector3 eyePosition = transform.position + Vector3.up * 1.5f; // AI eye level
+        Vector3 playerTarget = player.position + Vector3.up * 1f;     // Player center/upper chest
 
-        if (Physics.Raycast(eyePos, (playerPos - eyePos).normalized, out RaycastHit hit, viewRadius, obstructionMask | playerMask))
+        Vector3 rayDir = (playerTarget - eyePosition).normalized;
+
+        if (Physics.Raycast(eyePosition, rayDir, out RaycastHit hit, viewRadius, playerMask | obstructionMask))
         {
+            Debug.Log($"Ray hit: {hit.collider.name}");
+
             if (hit.collider.CompareTag("Player"))
-                return true; // Player is visible
+                return true;
         }
 
-        return false; // Player is obstructed or missed
+        return false; // ❌ Blocked or missed
     }
 
     private void OnDrawGizmosSelected()
@@ -52,8 +58,8 @@ public class AISenses : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, viewRadius);
 
         Vector3 forward = transform.forward;
-        Vector3 leftBoundary = Quaternion.Euler(0, -viewAngle / 2, 0) * forward;
-        Vector3 rightBoundary = Quaternion.Euler(0, viewAngle / 2, 0) * forward;
+        Vector3 leftBoundary = Quaternion.Euler(0, -viewAngle / 2f, 0) * forward;
+        Vector3 rightBoundary = Quaternion.Euler(0, viewAngle / 2f, 0) * forward;
 
         Gizmos.color = Color.blue;
         Gizmos.DrawLine(transform.position, transform.position + leftBoundary * viewRadius);
