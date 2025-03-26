@@ -1660,6 +1660,37 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 265133917}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &283873987
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 283873988}
+  m_Layer: 9
+  m_Name: ProjectileSpawnPoint
+  m_TagString: Projectiles
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &283873988
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 283873987}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.55, y: 0.13, z: 1.6}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1552662190}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &311629845
 GameObject:
   m_ObjectHideFlags: 0
@@ -12504,7 +12535,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 1.38, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 283873988}
   m_Father: {fileID: 1521624209}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1552662191
@@ -12550,12 +12582,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b63aa80b2eb8408ea08cb17f530d9d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackRange: 10
-  fireRate: 1
+  attackRange: 20
+  fireRate: 2
   damage: 5
   hitMask:
     serializedVersion: 2
     m_Bits: 64
+  projectilePrefab: {fileID: 2306372578892463275, guid: 609aa95cfd57b48f58f79c7c3d88df06, type: 3}
+  firePoint: {fileID: 283873988}
 --- !u!114 &1552662194
 MonoBehaviour:
   m_ObjectHideFlags: 0

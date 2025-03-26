@@ -9,6 +9,10 @@ public class AICombat : MonoBehaviour
     public float damage = 10f;
     public LayerMask hitMask;
 
+    [Header("Projectile Settings")]
+    public GameObject projectilePrefab;
+    public Transform firePoint;
+    
     private float fireCooldown = 0f;
     private Transform player;
     private AIController ai;
@@ -16,7 +20,7 @@ public class AICombat : MonoBehaviour
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
-        ai = GetComponent<AIController>(); // ✅ Link to controller
+        ai = GetComponent<AIController>();
     }
 
     private void Update()
@@ -25,9 +29,6 @@ public class AICombat : MonoBehaviour
             fireCooldown -= Time.deltaTime;
     }
 
-    /// <summary>
-    /// Returns true if the player is within shooting range.
-    /// </summary>
     public bool IsPlayerInRange()
     {
         if (player == null)
@@ -37,35 +38,25 @@ public class AICombat : MonoBehaviour
         return distance <= attackRange;
     }
 
-    /// <summary>
-    /// Fires at the player using raycast hitscan logic.
-    /// </summary>
     public void Attack()
     {
-        if (player == null || fireCooldown > 0f)
+        if (player == null || fireCooldown > 0f || projectilePrefab == null || firePoint == null)
             return;
 
         fireCooldown = 1f / fireRate;
 
-        // Optional: look at player for realism
+        // Ensure the firePoint is facing the player
         ai.movement.LookAt(player.position);
 
-        Vector3 origin = transform.position + Vector3.up * 1.5f; // Eye level
-        Vector3 direction = (player.position + Vector3.up * 1f - origin).normalized;
+        // Instantiate projectile using firePoint's rotation (accurate!)
+        GameObject projectile = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
 
-        if (Physics.Raycast(origin, direction, out RaycastHit hit, attackRange, hitMask))
+        EnemyProjectile proj = projectile.GetComponent<EnemyProjectile>();
+        if (proj != null)
         {
-            if (hit.collider.CompareTag("Player"))
-            {
-                PlayerHealth playerHealth = hit.collider.GetComponent<PlayerHealth>();
-                if (playerHealth != null)
-                {
-                    playerHealth.TakeDamage((int)damage);
-                    Debug.Log($"{gameObject.name} shot player for {damage} damage.");
-                }
-            }
+            proj.damage = (int)damage;
         }
 
-        // Optional: Add muzzle flash, sound, animation here
+        // Optional: play VFX or SFX here
     }
 }
