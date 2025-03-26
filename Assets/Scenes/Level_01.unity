@@ -12588,7 +12588,7 @@ MonoBehaviour:
   hitMask:
     serializedVersion: 2
     m_Bits: 64
-  projectilePrefab: {fileID: 2306372578892463275, guid: 609aa95cfd57b48f58f79c7c3d88df06, type: 3}
+  projectilePrefab: {fileID: 3915512058581278965, guid: 718ec40f567a04c7a92c5035a10defdf, type: 3}
   firePoint: {fileID: 283873988}
 --- !u!114 &1552662194
 MonoBehaviour:
@@ -12622,7 +12622,7 @@ MonoBehaviour:
     m_Bits: 64
   obstructionMask:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 1280
 --- !u!54 &1552662196
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -4,8 +4,7 @@ public class AISenses : MonoBehaviour
 {
     [Header("Vision Settings")]
     public float viewRadius = 15f;
-    [Range(0, 360)]
-    public float viewAngle = 120f;
+    [Range(0, 360)] public float viewAngle = 120f;
 
     public LayerMask playerMask;
     public LayerMask obstructionMask;
@@ -17,36 +16,36 @@ public class AISenses : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
     }
 
-    /// <summary>
-    /// Checks if the player is within vision range and in line of sight.
-    /// </summary>
     public bool CanSeePlayer()
     {
         if (player == null)
             return false;
 
-        Vector3 dirToPlayer = (player.position - transform.position).normalized;
+        Vector3 directionToPlayer = (player.position - transform.position).normalized;
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
         // Check distance
         if (distanceToPlayer > viewRadius)
             return false;
 
-        // Check angle
-        float angle = Vector3.Angle(transform.forward, dirToPlayer);
+        // Check FOV angle
+        float angle = Vector3.Angle(transform.forward, directionToPlayer);
         if (angle > viewAngle / 2f)
             return false;
 
-        // Check for obstructions
-        if (Physics.Raycast(transform.position + Vector3.up, dirToPlayer, distanceToPlayer, obstructionMask))
-            return false;
+        // ✅ Check for LOS (line of sight)
+        Vector3 eyePos = transform.position + Vector3.up * 1.5f; // Eye height
+        Vector3 playerPos = player.position + Vector3.up * 1f;
 
-        return true;
+        if (Physics.Raycast(eyePos, (playerPos - eyePos).normalized, out RaycastHit hit, viewRadius, obstructionMask | playerMask))
+        {
+            if (hit.collider.CompareTag("Player"))
+                return true; // Player is visible
+        }
+
+        return false; // Player is obstructed or missed
     }
 
-    /// <summary>
-    /// Debug visualization in editor.
-    /// </summary>
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;

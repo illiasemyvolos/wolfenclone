@@ -11,7 +11,7 @@ public class AIChaseState : AIState
 
     public override void Enter()
     {
-        // No-op for now
+        // Optional: play chase animation, alert sound, etc.
     }
 
     public override void Update()
@@ -19,14 +19,15 @@ public class AIChaseState : AIState
         if (player == null)
             return;
 
-        // Stop chasing if player is lost
+        // Lost sight of the player → transition to search
         if (!ai.senses.CanSeePlayer())
         {
-            ai.ChangeState(new AIPatrolState(ai));
+            Vector3 lastSeen = player.position;
+            ai.ChangeState(new AISearchState(ai, lastSeen));
             return;
         }
 
-        // Chase player
+        // Chase the player
         ai.movement.MoveTo(player.position);
         ai.movement.LookAt(player.position);
 

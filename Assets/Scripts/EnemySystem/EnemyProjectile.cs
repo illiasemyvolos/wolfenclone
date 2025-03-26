@@ -1,26 +1,26 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
 public class EnemyProjectile : MonoBehaviour
 {
     public float speed = 20f;
     public int damage = 10;
     public float lifetime = 5f;
 
+    private Rigidbody rb;
+
     private void Start()
     {
-        Destroy(gameObject, lifetime); // Auto-cleanup
+        rb = GetComponent<Rigidbody>();
+        rb.linearVelocity = transform.forward * speed;
+        Destroy(gameObject, lifetime);
     }
 
-    private void Update()
+    private void OnCollisionEnter(Collision collision)
     {
-        transform.position += transform.forward * speed * Time.deltaTime;
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
+        if (collision.collider.CompareTag("Player"))
         {
-            PlayerHealth playerHealth = other.GetComponent<PlayerHealth>();
+            PlayerHealth playerHealth = collision.collider.GetComponent<PlayerHealth>();
             if (playerHealth != null)
             {
                 playerHealth.TakeDamage(damage);
