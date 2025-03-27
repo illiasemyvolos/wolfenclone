@@ -8,17 +8,15 @@ public class Projectile : MonoBehaviour
     public float lifetime = 5f;
 
     [Header("Impact Settings")]
-    public GameObject impactEffectPrefab;  // Optional VFX for impact
+    public GameObject impactEffectPrefab;
 
     private void Start()
     {
-        // Automatically destroy the projectile after its lifetime
         Destroy(gameObject, lifetime);
     }
 
     private void Update()
     {
-        // Move the projectile forward
         transform.Translate(Vector3.forward * speed * Time.deltaTime);
     }
 
@@ -35,23 +33,10 @@ public class Projectile : MonoBehaviour
             }
 
             CreateImpactEffect();
-            Destroy(gameObject); // Destroy projectile on impact
+            Destroy(gameObject);
         }
         else if (!other.CompareTag("Enemy") && !other.isTrigger)
         {
-            // Collision with environment (walls, floors, etc.)
-            Debug.Log("🧱 Projectile hit a wall or object!");
-            CreateImpactEffect();
-            Destroy(gameObject);
-        }
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        // Additional check to destroy projectile when hitting non-trigger colliders
-        if (!collision.collider.CompareTag("Player") && !collision.collider.CompareTag("Enemy"))
-        {
-            Debug.Log("💥 Projectile collided with an object and was destroyed.");
             CreateImpactEffect();
             Destroy(gameObject);
         }

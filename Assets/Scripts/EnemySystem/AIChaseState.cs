@@ -12,6 +12,7 @@ public class AIChaseState : AIState
     public override void Enter()
     {
         // Optional: play chase animation, alert sound, etc.
+        Debug.Log($"🔴 {ai.gameObject.name} entering Chase State");
     }
 
     public override void Update()

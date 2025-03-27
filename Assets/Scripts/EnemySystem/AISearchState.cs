@@ -18,6 +18,8 @@ public class AISearchState : AIState
     {
         searchTimer = searchDuration;
         ai.movement.MoveTo(searchPosition);
+        
+        Debug.Log($"🟡 {ai.gameObject.name} entering Search State");
     }
 
     public override void Update()

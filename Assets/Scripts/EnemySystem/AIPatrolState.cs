@@ -21,6 +21,9 @@ public class AIPatrolState : AIState
             return;
 
         ai.movement.MoveTo(waypoints[currentWaypointIndex].position);
+        
+        Debug.Log($"🟢 {ai.gameObject.name} entering Patrol State");
+        // existing MoveTo logic...
     }
 
     public override void Update()

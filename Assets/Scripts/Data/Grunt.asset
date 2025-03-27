@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: Grunt
   m_EditorClassIdentifier: 
   movementSpeed: 1.8
-  searchDuration: 2
-  searchRotationSpeed: 100
+  searchDuration: 3
+  searchRotationSpeed: 300
   isRanged: 1
-  attackRange: 15
+  attackRange: 17
   fireRate: 2.08
   damage: 1
   useBurstFire: 0
   burstCount: 3
   burstDelay: 0.18
-  viewRadius: 20
-  viewAngle: 120
+  viewRadius: 21
+  viewAngle: 180

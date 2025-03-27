@@ -229,7 +229,7 @@ public class Weapon : MonoBehaviour
             weaponData.accuracyAndRecoil.baseAccuracy
         );
 
-        Debug.Log($"🔻 Accuracy Penalty Applied: {currentAccuracy}");
+        
     }
 
 
@@ -241,8 +241,7 @@ public class Weapon : MonoBehaviour
                 currentAccuracy + weaponData.accuracyAndRecoil.accuracyRecoveryRate * Time.deltaTime,
                 weaponData.accuracyAndRecoil.baseAccuracy
             );
-
-            Debug.Log($"🔄 Accuracy Recovery: {currentAccuracy}");
+            
         }
     }
 
