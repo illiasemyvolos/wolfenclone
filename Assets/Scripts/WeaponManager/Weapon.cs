@@ -21,6 +21,9 @@ public class Weapon : MonoBehaviour
     private PlayerInput playerInput;
     private InputAction fireAction;
     
+    private float swayUpdateRate = 1f / 30f; // 30 FPS
+    private float swayTimer = 0f;
+    
     private float currentAccuracy;
     private float nextFireTime;
     private Vector3 originalPosition;
@@ -299,34 +302,36 @@ public class Weapon : MonoBehaviour
 
     private IEnumerator ApplyRecoil()
     {
-        float recoilStrength = weaponData.accuracyAndRecoil.recoilAmount * 0.2f; // Balanced recoil strength
+        float recoilStrength = weaponData.accuracyAndRecoil.recoilAmount * 0.2f;
         Vector3 recoilPosition = originalPosition - new Vector3(0, 0, recoilStrength);
 
-        float recoilDuration = 0.1f;  // ⏳ Increased duration for smoother recoil
-        float recoveryDuration = 0.15f; // ⏳ Slightly slower recovery for realism
+        float recoilDuration = 0.1f;
+        float recoveryDuration = 0.15f;
+        float frameDelay = 1f / 30f; // 30 FPS simulation
 
         float elapsedTime = 0f;
 
-        // Recoil Phase (Smoothed Entry)
+        // Recoil Phase (choppy movement)
         while (elapsedTime < recoilDuration)
         {
-            transform.localPosition = Vector3.Lerp(transform.localPosition, recoilPosition, elapsedTime / recoilDuration);
-            elapsedTime += Time.deltaTime;
-            yield return null;
+            float t = elapsedTime / recoilDuration;
+            transform.localPosition = Vector3.Lerp(transform.localPosition, recoilPosition, t);
+            elapsedTime += frameDelay;
+            yield return new WaitForSeconds(frameDelay);
         }
 
-        // Reset elapsed time for recovery phase
         elapsedTime = 0f;
 
-        // Recovery Phase (Controlled Smooth Return)
+        // Recovery Phase (choppy return)
         while (elapsedTime < recoveryDuration)
         {
-            transform.localPosition = Vector3.Lerp(transform.localPosition, originalPosition, elapsedTime / recoveryDuration);
-            elapsedTime += Time.deltaTime;
-            yield return null;
+            float t = elapsedTime / recoveryDuration;
+            transform.localPosition = Vector3.Lerp(transform.localPosition, originalPosition, t);
+            elapsedTime += frameDelay;
+            yield return new WaitForSeconds(frameDelay);
         }
 
-        transform.localPosition = originalPosition; // Final correction to ensure perfect reset
+        transform.localPosition = originalPosition;
     }
 
 
@@ -383,21 +388,21 @@ public class Weapon : MonoBehaviour
     
     private void ApplyWeaponSway()
     {
-        // Get player movement input
-        float movementX = Input.GetAxis("Horizontal"); // A/D or Left Stick X-axis
-        float movementY = Input.GetAxis("Vertical");   // W/S or Left Stick Y-axis
+        swayTimer += Time.deltaTime;
+        if (swayTimer < swayUpdateRate) return;
+        swayTimer = 0f;
 
-        // Calculate sway position
+        float movementX = Input.GetAxis("Horizontal");
+        float movementY = Input.GetAxis("Vertical");
+
         float swayX = Mathf.Sin(Time.time * weaponData.swaySpeed) * weaponData.swayAmount * movementX;
         float swayY = Mathf.Sin(Time.time * weaponData.swaySpeed * 0.5f) * weaponData.swayAmount * movementY;
 
-        // Calculate target position for smoother transition
         Vector3 targetPosition = new Vector3(swayX, swayY, 0);
 
-        // Smoothly interpolate towards the target position
         transform.localPosition = Vector3.Lerp(
-            transform.localPosition, 
-            originalPosition + targetPosition, 
+            transform.localPosition,
+            originalPosition + targetPosition,
             Time.deltaTime * weaponData.swaySmoothness
         );
     }
