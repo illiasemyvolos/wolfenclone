@@ -17941,6 +17941,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3326645707945765732, guid: cc9991c1411be49c9bb076aedc2b9379, type: 3}
+      propertyPath: m_RendererIndex
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 3850819201247052754, guid: cc9991c1411be49c9bb076aedc2b9379, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -17980,6 +17984,22 @@ PrefabInstance:
     - target: {fileID: 3850819201247052754, guid: cc9991c1411be49c9bb076aedc2b9379, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4417602307392129196, guid: cc9991c1411be49c9bb076aedc2b9379, type: 3}
+      propertyPath: m_ClearFlags
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4417602307392129196, guid: cc9991c1411be49c9bb076aedc2b9379, type: 3}
+      propertyPath: m_BackGroundColor.b
+      value: 0.33962262
+      objectReference: {fileID: 0}
+    - target: {fileID: 4417602307392129196, guid: cc9991c1411be49c9bb076aedc2b9379, type: 3}
+      propertyPath: m_BackGroundColor.g
+      value: 0.3386436
+      objectReference: {fileID: 0}
+    - target: {fileID: 4417602307392129196, guid: cc9991c1411be49c9bb076aedc2b9379, type: 3}
+      propertyPath: m_BackGroundColor.r
+      value: 0.33802062
       objectReference: {fileID: 0}
     - target: {fileID: 5256312168006788531, guid: cc9991c1411be49c9bb076aedc2b9379, type: 3}
       propertyPath: staggerSpeedReduction

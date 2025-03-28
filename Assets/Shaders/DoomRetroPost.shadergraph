@@ -1,0 +1,55 @@
+{
+  "m_SerializedVersion": "JSONSerializedVersion",
+  "m_ObjectId": 1,
+  "m_Name": "DoomRetroPost",
+  "m_Guid": "d0000000000000000000000000000000",
+  "m_Script": "ShaderGraph",
+  "m_Path": "",
+  "m_SerializedGraph": {
+    "m_PreviewMode": 1,
+    "m_ActiveTargets": [ "UniversalFullscreen" ],
+    "m_Properties": [
+      {
+        "m_Name": "PixelResolution",
+        "m_ReferenceName": "_PixelResolution",
+        "m_Type": "Vector2",
+        "m_DefaultValue": { "x": 320.0, "y": 180.0 },
+        "m_Attributes": [],
+        "m_Hidden": false
+      },
+      {
+        "m_Name": "ColorSteps",
+        "m_ReferenceName": "_ColorSteps",
+        "m_Type": "Float",
+        "m_DefaultValue": 4.0,
+        "m_Attributes": [],
+        "m_Hidden": false
+      },
+      {
+        "m_Name": "ScanlineIntensity",
+        "m_ReferenceName": "_ScanlineIntensity",
+        "m_Type": "Float",
+        "m_DefaultValue": 0.05,
+        "m_Attributes": [],
+        "m_Hidden": false
+      }
+    ],
+    "m_Nodes": [],
+    "m_Outputs": [],
+    "m_Groups": [],
+    "m_StickyNotes": [],
+    "m_SerializableNodes": [],
+    "m_OutputNode": {
+      "m_OutputSlots": [
+        {
+          "m_Id": 0,
+          "m_DisplayName": "Color",
+          "m_SlotName": "Base Color",
+          "m_SlotType": "Vector4",
+          "m_DefaultValue": [ 1, 1, 1, 1 ]
+        }
+      ]
+    },
+    "m_PreviewTextureSerialized": null
+  }
+}
