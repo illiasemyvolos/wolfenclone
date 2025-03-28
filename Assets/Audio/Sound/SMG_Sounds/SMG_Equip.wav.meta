@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: dd37592d9dd88b543973b854e74f4b37
+guid: 1e42c776381d84d1088e4b5f39321351
 AudioImporter:
   externalObjects: {}
   serializedVersion: 6
@@ -20,10 +20,3 @@ AudioImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 148666
-  packageName: MaGuns
-  packageVersion: 1.0
-  assetPath: Assets/MaGuns/Arrow FlyBy_4.wav
-  uploadId: 316273

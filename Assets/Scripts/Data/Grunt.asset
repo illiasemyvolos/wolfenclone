@@ -24,3 +24,5 @@ MonoBehaviour:
   burstDelay: 0.18
   viewRadius: 21
   viewAngle: 180
+  fireSound: {fileID: 8300000, guid: 3bd80631166954bbb8c0f462bc2b0804, type: 3}
+  footstepSound: {fileID: 0}

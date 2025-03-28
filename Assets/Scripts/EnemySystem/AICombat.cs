@@ -10,11 +10,13 @@ public class AICombat : MonoBehaviour
     private float fireCooldown = 0f;
     private Transform player;
     private AIController ai;
+    private AudioSource fireAudioSource;
 
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
         ai = GetComponent<AIController>();
+        fireAudioSource = transform.Find("AudioSource_EnemyFire")?.GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -55,6 +57,12 @@ public class AICombat : MonoBehaviour
             proj.damage = (int)ai.behaviorData.damage;
         }
 
-        // Optional: add burst fire logic here in future
+        // 🔊 Play fire sound
+        if (ai.behaviorData.fireSound != null && fireAudioSource != null)
+        {
+            fireAudioSource.PlayOneShot(ai.behaviorData.fireSound);
+        }
+
+        // (Optional) Add burst fire logic here in future
     }
 }

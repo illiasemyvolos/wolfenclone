@@ -30,8 +30,11 @@ public class Weapon : MonoBehaviour
     private bool isReloading = false;
     private Coroutine reloadCoroutine;
     
-    [Header("Play Fire SoundSorce")]
+    [Header("Weapon SoundSorce")]
     private AudioSource fireAudioSource;
+    private AudioSource reloadAudioSource;
+    private AudioSource emptyAudioSource;
+    private AudioSource equipAudioSource;
 
     private void Start()
     {
@@ -77,6 +80,9 @@ public class Weapon : MonoBehaviour
         playerInput = GetComponentInParent<PlayerInput>(); // Ensure this references the correct player
         fireAction = playerInput.actions["Player/Fire"];   // Match this to your Input System mapping
         fireAudioSource = transform.Find("AudioSource_Fire")?.GetComponent<AudioSource>();
+        reloadAudioSource = transform.Find("AudioSource_Reload")?.GetComponent<AudioSource>();
+        emptyAudioSource = transform.Find("AudioSource_Empty")?.GetComponent<AudioSource>();
+        equipAudioSource = transform.Find("AudioSource_Equip")?.GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -109,7 +115,14 @@ public class Weapon : MonoBehaviour
 
     public void Shoot()
     {
-        if (!CanShoot()) return;
+        if (!CanShoot())
+        {
+            if (currentAmmo <= 0 && weaponData.emptyClickSound != null && emptyAudioSource != null)
+            {
+                emptyAudioSource.PlayOneShot(weaponData.emptyClickSound);
+            }
+            return;
+        }
 
         currentAmmo--;
         nextFireTime = Time.time + weaponData.fireRate;
@@ -277,7 +290,12 @@ public class Weapon : MonoBehaviour
         {
             playerUI.ShowReloadingText(true);
         }
-
+        
+        if (weaponData.reloadSound != null && reloadAudioSource != null)
+        {
+            reloadAudioSource.PlayOneShot(weaponData.reloadSound);
+        }
+        
         yield return new WaitForSeconds(weaponData.reloadTime);
 
         int ammoToReload = Mathf.Min(ammoNeeded, totalAmmo);

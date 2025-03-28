@@ -24,4 +24,8 @@ public class AIBehaviorData : ScriptableObject
     [Header("Vision Settings")]
     public float viewRadius = 15f;
     public float viewAngle = 120f;
+    
+    [Header("Audio")]
+    public AudioClip fireSound;
+    public AudioClip footstepSound;
 }

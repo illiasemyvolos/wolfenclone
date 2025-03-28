@@ -117,6 +117,13 @@ public class WeaponManager : MonoBehaviour
     {
         weapons[index].gameObject.SetActive(true);  // ✅ Ensure weapon activates
         Debug.Log($"Switched to {weapons[index].weaponData.weaponName}");
+        
+        Transform equipSource = weapons[index].transform.Find("AudioSource_Equip");
+        if (equipSource && weapons[index].weaponData.equipSound != null &&
+            equipSource.TryGetComponent(out AudioSource source))
+        {
+            source.PlayOneShot(weapons[index].weaponData.equipSound);
+        }
     }
 
     // ✅ New Method: Add Weapon or Merge Ammo
