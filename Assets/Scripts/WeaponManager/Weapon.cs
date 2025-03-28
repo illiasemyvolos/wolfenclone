@@ -29,6 +29,9 @@ public class Weapon : MonoBehaviour
     private Vector3 originalPosition;
     private bool isReloading = false;
     private Coroutine reloadCoroutine;
+    
+    [Header("Play Fire SoundSorce")]
+    private AudioSource fireAudioSource;
 
     private void Start()
     {
@@ -73,6 +76,7 @@ public class Weapon : MonoBehaviour
     {
         playerInput = GetComponentInParent<PlayerInput>(); // Ensure this references the correct player
         fireAction = playerInput.actions["Player/Fire"];   // Match this to your Input System mapping
+        fireAudioSource = transform.Find("AudioSource_Fire")?.GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -111,6 +115,12 @@ public class Weapon : MonoBehaviour
         nextFireTime = Time.time + weaponData.fireRate;
 
         ShowMuzzleFlash();
+
+        // 🔊 Play fire sound here
+        if (weaponData.fireSound != null && fireAudioSource != null)
+        {
+            fireAudioSource.PlayOneShot(weaponData.fireSound);
+        }
 
         if (weaponData.shotgunSettings.isShotgun)
         {

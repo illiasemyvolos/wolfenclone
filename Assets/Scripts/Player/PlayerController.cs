@@ -24,6 +24,8 @@ public class PlayerController : MonoBehaviour
     [Header("UI References")]
     public DeathScreenController deathScreenController;
     public DamageScreenController damageScreenController;
+    [Header("Audio")]
+    public FootstepAudio footstepAudio;
 
     public float GetCurrentHealth() => playerHealth.currentHealth;
     public float GetMaxHealth() => playerHealth.maxHealth;
@@ -114,6 +116,11 @@ public class PlayerController : MonoBehaviour
 
         velocity.y += gravity * Time.deltaTime;
         characterController.Move(velocity * Time.deltaTime);
+
+        // Tell footstep system if we're moving
+        bool isMoving = input.magnitude > 0.1f && characterController.isGrounded;
+        if (footstepAudio != null)
+            footstepAudio.SetMoving(isMoving);
     }
 
     void HandleLook()

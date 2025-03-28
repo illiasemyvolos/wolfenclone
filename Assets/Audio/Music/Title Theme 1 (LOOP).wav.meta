@@ -1,0 +1,29 @@
+fileFormatVersion: 2
+guid: 3e793a7a35c5a4164848df73a644d1e3
+timeCreated: 1560899987
+licenseType: Store
+AudioImporter:
+  serializedVersion: 6
+  defaultSettings:
+    loadType: 0
+    sampleRateSetting: 0
+    sampleRateOverride: 44100
+    compressionFormat: 1
+    quality: 1
+    conversionMode: 0
+  platformSettingOverrides: {}
+  forceToMono: 0
+  normalize: 1
+  preloadAudioData: 1
+  loadInBackground: 0
+  3D: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 148820
+  packageName: Shooter Action Themes Volume 1 - Sample Pack
+  packageVersion: 1.0
+  assetPath: Assets/Shooter Action Themes Volume 1 - Sample Pack/Title Theme 1 (LOOP).wav
+  uploadId: 316471

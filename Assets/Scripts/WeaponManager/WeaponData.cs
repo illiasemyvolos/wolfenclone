@@ -57,4 +57,10 @@ public class WeaponData : ScriptableObject
     public GameObject muzzleFlashPrefab;
     public GameObject bulletHolePrefab;
     [Range(1f, 30f)] public float bulletHoleLifetime = 10f;
+    
+    [Header("Audio")]
+    public AudioClip fireSound; // 🔊 Sound played on fire
+    public AudioClip reloadSound;
+    public AudioClip emptyClickSound;
+    public AudioClip equipSound;
 }
