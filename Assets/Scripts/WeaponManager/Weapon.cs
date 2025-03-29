@@ -35,6 +35,7 @@ public class Weapon : MonoBehaviour
     private AudioSource reloadAudioSource;
     private AudioSource emptyAudioSource;
     private AudioSource equipAudioSource;
+    private AudioSource dropShellsAudioSource;
 
     private void Start()
     {
@@ -83,6 +84,7 @@ public class Weapon : MonoBehaviour
         reloadAudioSource = transform.Find("AudioSource_Reload")?.GetComponent<AudioSource>();
         emptyAudioSource = transform.Find("AudioSource_Empty")?.GetComponent<AudioSource>();
         equipAudioSource = transform.Find("AudioSource_Equip")?.GetComponent<AudioSource>();
+        dropShellsAudioSource = transform.Find("AudioSource_DropShells")?.GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -133,6 +135,11 @@ public class Weapon : MonoBehaviour
         if (weaponData.fireSound != null && fireAudioSource != null)
         {
             fireAudioSource.PlayOneShot(weaponData.fireSound);
+        }
+        
+        if (weaponData.dropShellsSound != null && dropShellsAudioSource != null)
+        {
+            StartCoroutine(PlayShellDropDelayed(0.5f));
         }
 
         if (weaponData.shotgunSettings.isShotgun)
@@ -433,6 +440,16 @@ public class Weapon : MonoBehaviour
             originalPosition + targetPosition,
             Time.deltaTime * weaponData.swaySmoothness
         );
+    }
+    
+    private IEnumerator PlayShellDropDelayed(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        if (weaponData.dropShellsSound != null && dropShellsAudioSource != null)
+        {
+            dropShellsAudioSource.PlayOneShot(weaponData.dropShellsSound);
+        }
     }
 
 

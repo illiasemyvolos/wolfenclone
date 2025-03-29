@@ -43,3 +43,4 @@ MonoBehaviour:
   reloadSound: {fileID: 8300000, guid: f0c1b298e06d343318609408106b1f02, type: 3}
   emptyClickSound: {fileID: 8300000, guid: 54586911939ef4f0aa3be9a486ae294b, type: 3}
   equipSound: {fileID: 8300000, guid: 1e42c776381d84d1088e4b5f39321351, type: 3}
+  dropShellsSound: {fileID: 8300000, guid: 777e96ac5d1e2459a9601cec315550f0, type: 3}

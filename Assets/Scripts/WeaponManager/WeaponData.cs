@@ -63,4 +63,5 @@ public class WeaponData : ScriptableObject
     public AudioClip reloadSound;
     public AudioClip emptyClickSound;
     public AudioClip equipSound;
+    public AudioClip dropShellsSound;
 }
