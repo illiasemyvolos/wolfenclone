@@ -29,12 +29,12 @@ MonoBehaviour:
     baseAccuracy: 0.71
     movementAccuracyPenalty: 0.17
     accuracyRecoveryRate: 0.1
-    recoilAmount: 0.28
-    recoilSpeed: 4.2
+    recoilAmount: 0.3
+    recoilSpeed: 7
   spreadMultiplier: 0.42
-  swayAmount: 0.02
-  swaySpeed: 4
-  swaySmoothness: 10
+  swayAmount: 0.03
+  swaySpeed: 3
+  swaySmoothness: 20
   muzzleFlashOffset: {x: 0, y: 0, z: 0}
   muzzleFlashPrefab: {fileID: 1720926840074690270, guid: 635c7ba12c2994fe885e1fb00c6dbd15, type: 3}
   bulletHolePrefab: {fileID: 2029373245689763411, guid: f68be89c3d8d447a7b1f3a0d3e774f75, type: 3}
@@ -43,4 +43,8 @@ MonoBehaviour:
   reloadSound: {fileID: 8300000, guid: f0c1b298e06d343318609408106b1f02, type: 3}
   emptyClickSound: {fileID: 8300000, guid: 54586911939ef4f0aa3be9a486ae294b, type: 3}
   equipSound: {fileID: 8300000, guid: 1e42c776381d84d1088e4b5f39321351, type: 3}
-  dropShellsSound: {fileID: 8300000, guid: 777e96ac5d1e2459a9601cec315550f0, type: 3}
+  dropShellsSound:
+  - {fileID: 8300000, guid: 777e96ac5d1e2459a9601cec315550f0, type: 3}
+  - {fileID: 8300000, guid: ee516faf213ae4f1fb464e0f35976bd3, type: 3}
+  - {fileID: 8300000, guid: cc4b098885ed74e29a44af9582d5bf9e, type: 3}
+  - {fileID: 8300000, guid: 65eb06f4d599c46089d88952c28d03de, type: 3}

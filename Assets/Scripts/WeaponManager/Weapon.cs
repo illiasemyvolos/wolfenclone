@@ -446,9 +446,10 @@ public class Weapon : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
 
-        if (weaponData.dropShellsSound != null && dropShellsAudioSource != null)
+        if (weaponData.dropShellsSound != null && weaponData.dropShellsSound.Length > 0 && dropShellsAudioSource != null)
         {
-            dropShellsAudioSource.PlayOneShot(weaponData.dropShellsSound);
+            int index = Random.Range(0, weaponData.dropShellsSound.Length);
+            dropShellsAudioSource.PlayOneShot(weaponData.dropShellsSound[index]);
         }
     }
 
