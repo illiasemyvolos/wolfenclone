@@ -171,20 +171,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5be6eb30df4604f95871b70b2513446d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  visionRange: 25
-  attackRange: 20
-  moveSpeed: 3
-  bulletPrefab: {fileID: 3915512058581278965, guid: 718ec40f567a04c7a92c5035a10defdf, type: 3}
-  firePoint: {fileID: 1023701286}
-  bulletSpeed: 10
-  shootingCooldown: 1
-  shootingSectorAngle: 80
-  useBurstFire: 1
-  burstCount: 3
-  burstInterval: 0.2
-  rotationSpeed: 5
-  staggerDuration: 1.5
-  patrolPoints: []
 --- !u!114 &43307384
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -197,8 +183,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5271144d7814404eadea256a2552985, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 50
-  deathEffectPrefab: {fileID: 0}
 --- !u!195 &43307385
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2916,8 +2900,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5271144d7814404eadea256a2552985, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 50
-  deathEffectPrefab: {fileID: 0}
 --- !u!114 &447524503
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2930,17 +2912,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 557aa9b34c05649ca8e523bd0f3c942c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  visionRange: 15
-  attackRange: 5
-  moveSpeed: 2.5
-  attackDamage: 5
-  attackCooldown: 1
-  staggerDuration: 0.67
-  patrolPoints:
-  - {fileID: 1110975960}
-  - {fileID: 349525091}
-  - {fileID: 1703642373}
-  - {fileID: 706625845}
 --- !u!195 &447524504
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -5648,6 +5619,28 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 760424870}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &762563589 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3364357341994159554, guid: ad0c0de4340414dcc9e0d7e209591cda, type: 3}
+  m_PrefabInstance: {fileID: 8292096465534497943}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7cbc7530e44c46a2a053e8f2174169d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &762563590 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8160618530072885242, guid: ad0c0de4340414dcc9e0d7e209591cda, type: 3}
+  m_PrefabInstance: {fileID: 8292096465534497943}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed509d4cc311d4c55971217e6625ecfe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &795299102
 GameObject:
   m_ObjectHideFlags: 0
@@ -7078,20 +7071,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5be6eb30df4604f95871b70b2513446d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  visionRange: 25
-  attackRange: 20
-  moveSpeed: 3
-  bulletPrefab: {fileID: 3915512058581278965, guid: 718ec40f567a04c7a92c5035a10defdf, type: 3}
-  firePoint: {fileID: 1375627985}
-  bulletSpeed: 10
-  shootingCooldown: 1
-  shootingSectorAngle: 80
-  useBurstFire: 1
-  burstCount: 3
-  burstInterval: 0.2
-  rotationSpeed: 5
-  staggerDuration: 1.5
-  patrolPoints: []
 --- !u!114 &925830810
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7104,8 +7083,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5271144d7814404eadea256a2552985, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 50
-  deathEffectPrefab: {fileID: 0}
 --- !u!195 &925830811
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -10472,8 +10449,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5271144d7814404eadea256a2552985, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 50
-  deathEffectPrefab: {fileID: 0}
 --- !u!195 &1264064266
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -10628,20 +10603,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5be6eb30df4604f95871b70b2513446d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  visionRange: 25
-  attackRange: 20
-  moveSpeed: 3
-  bulletPrefab: {fileID: 3915512058581278965, guid: 718ec40f567a04c7a92c5035a10defdf, type: 3}
-  firePoint: {fileID: 1174349422}
-  bulletSpeed: 10
-  shootingCooldown: 1
-  shootingSectorAngle: 80
-  useBurstFire: 1
-  burstCount: 3
-  burstInterval: 0.2
-  rotationSpeed: 5
-  staggerDuration: 1.5
-  patrolPoints: []
 --- !u!1 &1280668367
 GameObject:
   m_ObjectHideFlags: 0
@@ -12451,20 +12412,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5be6eb30df4604f95871b70b2513446d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  visionRange: 25
-  attackRange: 20
-  moveSpeed: 3
-  bulletPrefab: {fileID: 3915512058581278965, guid: 718ec40f567a04c7a92c5035a10defdf, type: 3}
-  firePoint: {fileID: 198429696}
-  bulletSpeed: 10
-  shootingCooldown: 1
-  shootingSectorAngle: 80
-  useBurstFire: 1
-  burstCount: 3
-  burstInterval: 0.2
-  rotationSpeed: 5
-  staggerDuration: 1.5
-  patrolPoints: []
 --- !u!114 &1490065970
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12477,8 +12424,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5271144d7814404eadea256a2552985, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 50
-  deathEffectPrefab: {fileID: 0}
 --- !u!195 &1490065971
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -12747,8 +12692,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5271144d7814404eadea256a2552985, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 50
-  deathEffectPrefab: {fileID: 0}
 --- !u!114 &1495485555
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12761,13 +12704,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 557aa9b34c05649ca8e523bd0f3c942c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  visionRange: 15
-  attackRange: 5
-  moveSpeed: 3
-  attackDamage: 7
-  attackCooldown: 1
-  staggerDuration: 0.67
-  patrolPoints: []
 --- !u!195 &1495485556
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -17504,8 +17440,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5271144d7814404eadea256a2552985, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 50
-  deathEffectPrefab: {fileID: 0}
 --- !u!114 &2087446332
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17518,13 +17452,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 557aa9b34c05649ca8e523bd0f3c942c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  visionRange: 15
-  attackRange: 5
-  moveSpeed: 3
-  attackDamage: 7
-  attackCooldown: 1
-  staggerDuration: 0.67
-  patrolPoints: []
 --- !u!195 &2087446333
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -19134,11 +19061,11 @@ PrefabInstance:
     - target: {fileID: 2987481674887191423, guid: 7c9989e48521145398eac598a183d216, type: 3}
       propertyPath: weaponManager
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 762563589}
     - target: {fileID: 2987481674887191423, guid: 7c9989e48521145398eac598a183d216, type: 3}
       propertyPath: playerController
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 762563590}
     - target: {fileID: 7395192412689217375, guid: 7c9989e48521145398eac598a183d216, type: 3}
       propertyPath: m_Name
       value: InitializationManager
