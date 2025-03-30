@@ -51,7 +51,7 @@ public class WeaponManager : MonoBehaviour
 
         if (fireAction.triggered)
         {
-            weapons[currentWeaponIndex].Shoot();
+            weapons[currentWeaponIndex].HandleShoot();
         }
 
         if (reloadAction.triggered)
@@ -129,6 +129,7 @@ public class WeaponManager : MonoBehaviour
     // ✅ New Method: Add Weapon or Merge Ammo
     public void AddOrMergeWeapon(Weapon newWeaponPrefab, int ammoAmount)
     {
+        // Merge ammo if weapon already exists
         foreach (Weapon weapon in weapons)
         {
             if (weapon.weaponData.weaponName == newWeaponPrefab.weaponData.weaponName)
@@ -139,11 +140,13 @@ public class WeaponManager : MonoBehaviour
             }
         }
 
+        // Deactivate current weapon
         if (weapons.Count > 0)
         {
             weapons[currentWeaponIndex].gameObject.SetActive(false);
         }
 
+        // Instantiate and set up new weapon
         Weapon newWeaponInstance = Instantiate(
             newWeaponPrefab,
             weaponHolder.position,
@@ -151,15 +154,18 @@ public class WeaponManager : MonoBehaviour
             weaponHolder
         );
 
+        // ✅ Manually cache all handler references immediately
+        newWeaponInstance.CacheHandlers(); // 🔥 THIS FIXES THE NULL EXCEPTION
+
+        // Initialize ammo and data
         newWeaponInstance.InitializeWeaponData(newWeaponPrefab.weaponData, ammoAmount);
 
-
+        // Reset transform
         newWeaponInstance.transform.localPosition = Vector3.zero;
         newWeaponInstance.transform.localRotation = Quaternion.identity;
+        newWeaponInstance.gameObject.SetActive(false);
 
-        newWeaponInstance.gameObject.SetActive(false); 
         weapons.Add(newWeaponInstance);
-
         currentWeaponIndex = Mathf.Clamp(weapons.Count - 1, 0, weapons.Count - 1);
         SelectWeapon(currentWeaponIndex);
 
