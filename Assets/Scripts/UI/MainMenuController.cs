@@ -1,22 +1,25 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MainMenuController : MonoBehaviour
 {
-    public void PlayGame()
+    [SerializeField] private Button startButton;
+    [SerializeField] private Button quitButton;
+
+    private void Start()
     {
-        SceneManager.LoadScene("SampleScene"); // Replace with your gameplay scene name
+        startButton.onClick.AddListener(OnStartClicked);
+        quitButton.onClick.AddListener(OnQuitClicked);
     }
 
-    public void OpenSettings()
+    private void OnStartClicked()
     {
-        Debug.Log("⚙️ Open Settings (To Be Implemented)");
-        // Add settings logic here
+        GameStateManager.Instance.SetState(GameState.Gameplay);
     }
 
-    public void QuitGame()
+    private void OnQuitClicked()
     {
-        Debug.Log("❌ Quit Game");
         Application.Quit();
+        Debug.Log("Quit Game");
     }
 }

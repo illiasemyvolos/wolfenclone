@@ -6,10 +6,6 @@ public class PlayerHealth : MonoBehaviour
     public int maxHealth = 100;
     public int currentHealth;
 
-    [Header("UI & Effects")]
-    public DamageScreenController damageScreenController;
-    public DeathScreenController deathScreenController;
-
     private bool isDead = false;
 
     private void Start()
@@ -24,7 +20,7 @@ public class PlayerHealth : MonoBehaviour
         currentHealth -= damage;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
 
-        damageScreenController?.ShowDamageEffect();
+        // Hook into new DamageSplash via UIManager later
 
         if (currentHealth <= 0)
         {
@@ -48,6 +44,6 @@ public class PlayerHealth : MonoBehaviour
     private void Die()
     {
         isDead = true;
-        deathScreenController?.ShowDeathScreen();
+        // Hook into new DeathScreen via UIManager later
     }
 }

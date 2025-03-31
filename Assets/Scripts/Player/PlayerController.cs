@@ -21,9 +21,6 @@ public class PlayerController : MonoBehaviour
     public Transform cameraTransform;
     private float xRotation = 0f;
 
-    [Header("UI References")]
-    public DeathScreenController deathScreenController;
-    public DamageScreenController damageScreenController;
     [Header("Audio")]
     public FootstepAudio footstepAudio;
 
@@ -53,12 +50,6 @@ public class PlayerController : MonoBehaviour
         Cursor.visible = false;
     }
 
-    private void Start()
-    {
-        playerHealth.damageScreenController = damageScreenController;
-        playerHealth.deathScreenController = deathScreenController;
-    }
-
     public void TakeDamage(float damage)
     {
         int remainingDamage = playerArmor.AbsorbDamage((int)damage);
@@ -69,7 +60,7 @@ public class PlayerController : MonoBehaviour
             playerStagger.Stagger();
         }
     }
-    
+
     public void ModifyMovementSpeed(float speedMultiplier, float duration)
     {
         StartCoroutine(ModifySpeedCoroutine(speedMultiplier, duration));
@@ -84,6 +75,7 @@ public class PlayerController : MonoBehaviour
 
         moveSpeed = originalSpeed;
     }
+
     public void AddArmor(float armorAmount)
     {
         playerArmor.AddArmor((int)armorAmount);
@@ -117,7 +109,6 @@ public class PlayerController : MonoBehaviour
         velocity.y += gravity * Time.deltaTime;
         characterController.Move(velocity * Time.deltaTime);
 
-        // Tell footstep system if we're moving
         bool isMoving = input.magnitude > 0.1f && characterController.isGrounded;
         if (footstepAudio != null)
             footstepAudio.SetMoving(isMoving);
