@@ -17,7 +17,7 @@ MonoBehaviour:
   searchRotationSpeed: 300
   isRanged: 1
   attackRange: 17
-  fireRate: 2.08
+  fireRate: 4
   damage: 1
   useBurstFire: 0
   burstCount: 3

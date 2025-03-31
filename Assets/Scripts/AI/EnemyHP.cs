@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -16,6 +17,17 @@ public class EnemyHP : MonoBehaviour
     private void Start()
     {
         currentHealth = maxHealth;
+    }
+    
+    private void OnEnable()
+    {
+        EnemyManager.Instance?.RegisterEnemy();
+    }
+
+    private void OnDisable()
+    {
+        Debug.Log($"{gameObject.name} unregistered from EnemyManager.");
+        EnemyManager.Instance?.UnregisterEnemy();
     }
 
     public void TakeDamage(int amount)
@@ -53,5 +65,7 @@ public class EnemyHP : MonoBehaviour
         {
             Destroy(gameObject, destroyDelay);
         }
+        // ✅ Add this
+        LevelController.Instance?.AddKill();
     }
 }

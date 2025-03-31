@@ -25,6 +25,7 @@ public class AIController : MonoBehaviour
     public string currentStateName;
 
     private float decisionTimer;
+    private bool isRegistered = false; // ✅ Track if this enemy was already registered
 
     private void Awake()
     {
@@ -41,6 +42,7 @@ public class AIController : MonoBehaviour
         }
         else
         {
+            RegisterEnemyIfNeeded();
             StartCoroutine(DelayedStartState());
         }
     }
@@ -80,9 +82,10 @@ public class AIController : MonoBehaviour
 
     public AIState GetCurrentState() => currentState;
 
-    // ✅ Public method to enable AI logic externally
     public void ActivateAI()
     {
+        RegisterEnemyIfNeeded(); // ✅ Register this enemy if not already done
+
         enabled = true;
         if (senses != null) senses.enabled = true;
         if (movement != null) movement.enabled = true;
@@ -91,7 +94,6 @@ public class AIController : MonoBehaviour
         StartCoroutine(DelayedStartState());
     }
 
-    // ✅ Public method to disable AI logic
     public void DeactivateAI()
     {
         if (senses != null) senses.enabled = false;
@@ -99,8 +101,15 @@ public class AIController : MonoBehaviour
         if (combat != null) combat.enabled = false;
 
         currentState = null; // Clear active AI logic
+    }
 
-        // Do NOT disable this controller script itself!
-        // Leave `enabled = true;` so we can re-enable via ActivateAI()
+    // ✅ Register enemy exactly once
+    private void RegisterEnemyIfNeeded()
+    {
+        if (!isRegistered)
+        {
+            EnemyManager.Instance?.RegisterEnemy();
+            isRegistered = true;
+        }
     }
 }

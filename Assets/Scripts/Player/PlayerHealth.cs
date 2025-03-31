@@ -44,6 +44,6 @@ public class PlayerHealth : MonoBehaviour
     private void Die()
     {
         isDead = true;
-        // Hook into new DeathScreen via UIManager later
+        GameStateManager.Instance.SetState(GameState.GameOver);
     }
 }

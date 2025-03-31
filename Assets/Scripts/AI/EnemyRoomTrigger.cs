@@ -45,6 +45,19 @@ public class EnemyRoomTrigger : MonoBehaviour
             }
         }
 
+        // ✅ Wait until all enemies are active before marking all as spawned
+        yield return new WaitUntil(() =>
+        {
+            int activeEnemies = 0;
+            foreach (GameObject enemy in enemies)
+            {
+                if (enemy != null && enemy.activeInHierarchy)
+                    activeEnemies++;
+            }
+            return activeEnemies == enemies.Count;
+        });
+
+        EnemyManager.Instance.MarkAllEnemiesSpawned();
         Debug.Log("✅ EnemyRoomTrigger activation complete.");
     }
 }
