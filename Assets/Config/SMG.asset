@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: MP45
   ammoType: 1
+  weaponIcon: {fileID: 21300000, guid: 59b29050fa94d477ca050e73037c64c9, type: 3}
   damage: 7
   fireRate: 0.17
   clipSize: 30

@@ -12,6 +12,20 @@ public class GameOverController : MonoBehaviour
     {
         retryButton.onClick.AddListener(OnRetry);
         mainMenuButton.onClick.AddListener(OnMainMenu);
+
+        // Listen for GameState changes
+        GameStateManager.OnGameStateChanged += OnGameStateChanged;
+        gameObject.SetActive(false); // Hide by default
+    }
+
+    private void OnDestroy()
+    {
+        GameStateManager.OnGameStateChanged -= OnGameStateChanged;
+    }
+
+    private void OnGameStateChanged(GameState newState)
+    {
+        gameObject.SetActive(newState == GameState.GameOver);
     }
 
     private void OnRetry()

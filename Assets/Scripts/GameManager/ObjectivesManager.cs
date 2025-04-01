@@ -19,11 +19,17 @@ public class ObjectivesManager : MonoBehaviour
     {
         if (EnemyManager.Instance != null && EnemyManager.Instance.AliveEnemies <= 0)
         {
+            // ✅ Check if player is alive
+            PlayerHealth player = FindObjectOfType<PlayerHealth>();
+            if (player == null || player.IsDead())
+            {
+                Debug.LogWarning("Player is dead — not triggering Victory.");
+                return;
+            }
+
             if (LevelController.Instance != null)
             {
                 LevelController.Instance.OnLevelFinished();
-
-                // Save stats globally before scene transition
                 GameStats.EnemiesKilled = LevelController.Instance.EnemiesKilled;
                 GameStats.LevelTime = LevelController.Instance.LevelTime;
             }

@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: Mosberg
   ammoType: 2
+  weaponIcon: {fileID: 21300000, guid: a49d91b7082224f6c96b414716c7a886, type: 3}
   damage: 15
   fireRate: 0.4
   clipSize: 8

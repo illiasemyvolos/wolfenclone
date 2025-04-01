@@ -13,6 +13,7 @@ public class PlayerUI : MonoBehaviour
     [Header("Weapon Info UI")]
     public TextMeshProUGUI weaponNameText;
     public TextMeshProUGUI ammoText;
+    public Image weaponIconImage;
 
     [Header("Reloading UI")]
     public TextMeshProUGUI reloadingText;
@@ -52,7 +53,6 @@ public class PlayerUI : MonoBehaviour
         UpdateWeaponInfo();
     }
 
-    // Combines Health and Armor updates into a single method for clarity
     public void UpdatePlayerStats()
     {
         if (playerController == null) return;
@@ -70,24 +70,27 @@ public class PlayerUI : MonoBehaviour
 
     private void UpdateWeaponInfo()
     {
-        // ✅ Added Safety Checks for Out-of-Range Protection
         if (weaponManager == null || 
             weaponManager.weapons.Count == 0 || 
             weaponManager.currentWeaponIndex < 0 || 
             weaponManager.currentWeaponIndex >= weaponManager.weapons.Count)
         {
             if (weaponNameText != null) weaponNameText.text = "No Weapon";
-            if (ammoText != null) ammoText.text = "Ammo: 0 / 0";
+            if (ammoText != null) ammoText.text = " 0 / 0";
+            if (weaponIconImage != null) weaponIconImage.sprite = null;
             return;
         }
 
         Weapon currentWeapon = weaponManager.weapons[weaponManager.currentWeaponIndex];
 
-        if (weaponNameText != null && ammoText != null)
-        {
+        if (weaponNameText != null)
             weaponNameText.text = currentWeapon.weaponData.weaponName;
+
+        if (ammoText != null)
             ammoText.text = $"{currentWeapon.currentAmmo} / {currentWeapon.totalAmmo}";
-        }
+
+        if (weaponIconImage != null)
+            weaponIconImage.sprite = currentWeapon.weaponData.weaponIcon;
     }
 
     public void ShowReloadingText(bool isReloading)
@@ -97,4 +100,6 @@ public class PlayerUI : MonoBehaviour
             reloadingText.gameObject.SetActive(isReloading);
         }
     }
+
+    
 }

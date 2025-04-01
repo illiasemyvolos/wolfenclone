@@ -8,7 +8,9 @@ public class GameStateManager : MonoBehaviour
     public static GameStateManager Instance { get; private set; }
 
     public GameState CurrentState { get; private set; }
-    public event Action<GameState> OnGameStateChanged;
+
+    // 🔧 Now static so other classes can subscribe without needing a reference
+    public static event Action<GameState> OnGameStateChanged;
 
     [Header("Scene Names")]
     [SerializeField] private string gameplayScene = "Level_01";
@@ -34,7 +36,7 @@ public class GameStateManager : MonoBehaviour
         if (newState == CurrentState) return;
 
         CurrentState = newState;
-        OnGameStateChanged?.Invoke(CurrentState);
+        OnGameStateChanged?.Invoke(CurrentState); // ✅ Safe to call static event
 
         switch (newState)
         {

@@ -24,6 +24,9 @@ public class WeaponData : ScriptableObject
     [Header("Basic Info")]
     public string weaponName;
     public AmmoType ammoType;
+    
+    [Header("UI")]
+    public Sprite weaponIcon;
 
     [Header("Weapon Stats")]
     [Range(1, 200)] public int damage = 10;
