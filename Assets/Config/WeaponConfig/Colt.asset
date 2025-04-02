@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9afad16f109348d5bfd34f6421d1512, type: 3}
+  m_Name: Colt
+  m_EditorClassIdentifier: 
+  weaponName: Colt
+  ammoType: 0
+  weaponIcon: {fileID: 21300000, guid: 9eb4d28b56f3f4da58aa90f8e37efbe8, type: 3}
+  damage: 5
+  fireRate: 0.2
+  clipSize: 8
+  maxAmmo: 40
+  reloadTime: 1.7
+  fireRange: 25
+  shotgunSettings:
+    isShotgun: 0
+    pelletsPerShot: 1
+    spreadAngle: 0
+  isAutoFire: 0
+  accuracyAndRecoil:
+    baseAccuracy: 0.7
+    movementAccuracyPenalty: 0.5
+    accuracyRecoveryRate: 0.1
+    recoilAmount: 0.31
+    recoilSpeed: 4.3
+  spreadMultiplier: 0.2
+  swayAmount: 0.02
+  swaySpeed: 4
+  swaySmoothness: 10
+  muzzleFlashOffset: {x: 0, y: 0, z: 0}
+  muzzleFlashPrefab: {fileID: 1720926840074690270, guid: 635c7ba12c2994fe885e1fb00c6dbd15, type: 3}
+  bulletHolePrefab: {fileID: 2029373245689763411, guid: f68be89c3d8d447a7b1f3a0d3e774f75, type: 3}
+  bulletHoleLifetime: 10
+  fireSound: {fileID: 8300000, guid: 6d7bb73ee9d574128b4357bc964d8365, type: 3}
+  reloadSound: {fileID: 8300000, guid: 58beda3bc5d644277b55cce52c130c6c, type: 3}
+  emptyClickSound: {fileID: 8300000, guid: 54586911939ef4f0aa3be9a486ae294b, type: 3}
+  equipSound: {fileID: 8300000, guid: 552f81c9d0bc74bfb892ab8b01dd5f80, type: 3}
+  dropShellsSound:
+  - {fileID: 8300000, guid: 777e96ac5d1e2459a9601cec315550f0, type: 3}
+  - {fileID: 8300000, guid: ee516faf213ae4f1fb464e0f35976bd3, type: 3}
+  - {fileID: 8300000, guid: cc4b098885ed74e29a44af9582d5bf9e, type: 3}
+  - {fileID: 8300000, guid: 65eb06f4d599c46089d88952c28d03de, type: 3}

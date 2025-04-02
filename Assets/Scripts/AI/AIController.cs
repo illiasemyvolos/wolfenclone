@@ -112,4 +112,15 @@ public class AIController : MonoBehaviour
             isRegistered = true;
         }
     }
+    
+    public void ForceAggro()
+    {
+        if (!enabled) ActivateAI(); // In case it's still inactive
+
+        // Only switch if not already chasing or in combat
+        if (!(currentState is AIChaseState))
+        {
+            ChangeState(new AIChaseState(this));
+        }
+    }
 }

@@ -52,7 +52,7 @@ public class WeaponData : ScriptableObject
     [Range(0f, 0.1f)] public float swayAmount = 0.02f;        // 🔄 Amount of horizontal sway
     [Range(1f, 10f)] public float swaySpeed = 4f;             // ⏳ Speed of sway
     [Range(5f, 20f)] public float swaySmoothness = 10f;       // ⚙️ Smooths sway movement
-
+    
     [Header("Muzzle Flash Settings")]
     public Vector3 muzzleFlashOffset = Vector3.zero; // 🔥 Adjustable offset for muzzle position
 

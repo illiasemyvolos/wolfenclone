@@ -13,7 +13,7 @@ public class GameStateManager : MonoBehaviour
     public static event Action<GameState> OnGameStateChanged;
 
     [Header("Scene Names")]
-    [SerializeField] private string gameplayScene = "Level_01";
+    [SerializeField] private string gameplayScene = "Level_02";
     [SerializeField] private string mainMenuScene = "MainMenu";
     [SerializeField] private string blackoutScene = "Blackout";
     [SerializeField] private string gameOverScene = "GameOverScreen";

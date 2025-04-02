@@ -34,6 +34,16 @@ public class EnemyHP : MonoBehaviour
     {
         currentHealth -= amount;
 
+        // Make the enemy aggressive when hurt (if still alive)
+        if (currentHealth > 0)
+        {
+            AIController ai = GetComponent<AIController>();
+            if (ai != null)
+            {
+                ai.ForceAggro();
+            }
+        }
+
         if (currentHealth <= 0)
         {
             Die();
