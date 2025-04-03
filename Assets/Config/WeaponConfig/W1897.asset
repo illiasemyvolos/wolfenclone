@@ -32,7 +32,7 @@ MonoBehaviour:
     accuracyRecoveryRate: 0.14
     recoilAmount: 1.48
     recoilSpeed: 1.3
-  spreadMultiplier: 1
+  spreadMultiplier: 0.6
   swayAmount: 0.02
   swaySpeed: 4
   swaySmoothness: 10

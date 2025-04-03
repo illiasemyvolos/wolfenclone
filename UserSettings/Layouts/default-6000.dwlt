@@ -171,7 +171,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 50}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 18
+  controlID: 50
   draggingID: 0
 --- !u!114 &8
 MonoBehaviour:
@@ -209,7 +209,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: GameView
+  m_Name: SceneView
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
@@ -220,12 +220,12 @@ MonoBehaviour:
     height: 535.5
   m_MinSize: {x: 202, y: 226}
   m_MaxSize: {x: 4002, y: 4026}
-  m_ActualView: {fileID: 12}
+  m_ActualView: {fileID: 14}
   m_Panes:
   - {fileID: 14}
   - {fileID: 12}
-  m_Selected: 1
-  m_LastSelected: 0
+  m_Selected: 0
+  m_LastSelected: 1
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -272,8 +272,8 @@ MonoBehaviour:
     y: 0
     width: 280
     height: 844
-  m_MinSize: {x: 276, y: 76}
-  m_MaxSize: {x: 4001, y: 4026}
+  m_MinSize: {x: 275, y: 50}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 17}
   m_Panes:
   - {fileID: 17}
@@ -350,7 +350,7 @@ MonoBehaviour:
     m_HSlider: 0
     m_VSlider: 0
     m_IgnoreScrollWheelUntilClicked: 0
-    m_EnableMouseInput: 1
+    m_EnableMouseInput: 0
     m_EnableSliderZoomHorizontal: 0
     m_EnableSliderZoomVertical: 0
     m_UniformScale: 1
@@ -423,7 +423,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: c69cfeff7212ffff866fffff849cffffaecdffff46f7ffff14f8ffff9af8ffff18f9ffff22f9ffff36f9fffff4faffff7cad0000
+      m_ExpandedIDs: bcd0fefffad0feff3ad1feffde01ffff1c02ffff9402ffff8a32ffffe685ffff8eb1ffffa6ceffffb6f7ffffc0f7ffff4ef9ffffdcf9fffff4faffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1055,9 +1055,9 @@ MonoBehaviour:
   m_AudioPlay: 0
   m_DebugDrawModesUseInteractiveLightBakingData: 0
   m_Position:
-    m_Target: {x: 0, y: 1.6999998, z: -45.4}
+    m_Target: {x: -0.49506402, y: 2.1316905, z: -45.912342}
     speed: 2
-    m_Value: {x: 0, y: 1.6999998, z: -45.4}
+    m_Value: {x: -0.49506402, y: 2.1316905, z: -45.912342}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -1103,13 +1103,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: 0.09619028, y: -0.7567025, z: 0.11436434, w: 0.6364527}
+    m_Target: {x: -0.09515617, y: -0.9044209, z: -0.30827168, w: 0.2791743}
     speed: 2
-    m_Value: {x: 0.09619017, y: -0.7567016, z: 0.11436421, w: 0.6364519}
+    m_Value: {x: -0.09515609, y: -0.90442014, z: -0.3082714, w: 0.27917406}
   m_Size:
-    m_Target: 1.6760582
+    m_Target: 1.083872
     speed: 2
-    m_Value: 1.6760582
+    m_Value: 1.083872
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -1187,7 +1187,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets
+    - Assets/Prefabs/Player
     m_Globs: []
     m_ProductIds: 
     m_AnyWithAssetOrigin: 0
@@ -1197,16 +1197,16 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 72
   m_LastFolders:
-  - Assets
+  - Assets/Prefabs/Player
   m_LastFoldersGridSize: 72
   m_LastProjectPath: /Users/illiasemyvolos/Unity/wolfenclone
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 79}
-    m_SelectedIDs: faba0000
-    m_LastClickedID: 47866
-    m_ExpandedIDs: 00000000faba000066bb00007cbb000000ca9a3b
+    m_SelectedIDs: d4fa0100
+    m_LastClickedID: 129748
+    m_ExpandedIDs: 0000000004bb000070bb000076bb000082bb000086bb0000fe13020000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1235,7 +1235,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000faba0000
+    m_ExpandedIDs: 0000000004bb0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1264,7 +1264,7 @@ MonoBehaviour:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
     m_HadKeyboardFocusLastEvent: 1
-    m_ExpandedInstanceIDs: c62300005ee30000c6170100000000008cc30000
+    m_ExpandedInstanceIDs: c62300005ee30000c61701008cc3000000000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
