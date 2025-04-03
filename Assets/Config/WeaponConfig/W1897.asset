@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9afad16f109348d5bfd34f6421d1512, type: 3}
+  m_Name: W1897
+  m_EditorClassIdentifier: 
+  weaponName: Winchester
+  ammoType: 2
+  weaponIcon: {fileID: 21300000, guid: fa84a7e05c8ad4cc799a82f99890a54d, type: 3}
+  damage: 10
+  fireRate: 0.4
+  clipSize: 5
+  maxAmmo: 40
+  reloadTime: 2.5
+  fireRange: 20
+  shotgunSettings:
+    isShotgun: 1
+    pelletsPerShot: 8
+    spreadAngle: 30
+  isAutoFire: 0
+  accuracyAndRecoil:
+    baseAccuracy: 0.56
+    movementAccuracyPenalty: 0.41
+    accuracyRecoveryRate: 0.14
+    recoilAmount: 1.48
+    recoilSpeed: 1.3
+  spreadMultiplier: 1
+  swayAmount: 0.02
+  swaySpeed: 4
+  swaySmoothness: 10
+  muzzleFlashOffset: {x: 0, y: 0, z: 0}
+  muzzleFlashPrefab: {fileID: 1720926840074690270, guid: 635c7ba12c2994fe885e1fb00c6dbd15, type: 3}
+  bulletHolePrefab: {fileID: 2029373245689763411, guid: f68be89c3d8d447a7b1f3a0d3e774f75, type: 3}
+  bulletHoleLifetime: 10
+  fireSound: {fileID: 8300000, guid: 18710a51496a24e00821cc02c86148de, type: 3}
+  reloadSound: {fileID: 8300000, guid: c8f1402fb5a9644aeba7f6506d57196a, type: 3}
+  emptyClickSound: {fileID: 8300000, guid: 54586911939ef4f0aa3be9a486ae294b, type: 3}
+  equipSound: {fileID: 8300000, guid: 2b8da05a4bcbf40568a47e2eacbce753, type: 3}
+  dropShellsSound:
+  - {fileID: 8300000, guid: 77fa9936e93ea458b9abbe2364e550b7, type: 3}
+  - {fileID: 8300000, guid: 80b3eb1b4cabd40b6838dcfd28323f89, type: 3}
+  - {fileID: 8300000, guid: e8f57efcf2eb541e9915910463c7eccd, type: 3}
+  - {fileID: 8300000, guid: 8809dba131eb04673aafe95e17f21ada, type: 3}
