@@ -20,6 +20,9 @@ public class PlayerUI : MonoBehaviour
 
     [Header("Crosshair UI")]
     public GameObject crosshair;
+    
+    [Header("Damage Splash UI")]
+    [SerializeField] private DamageSplashUI damageSplash;
 
     private PlayerController playerController;
     private WeaponManager weaponManager;
@@ -99,6 +102,11 @@ public class PlayerUI : MonoBehaviour
         {
             reloadingText.gameObject.SetActive(isReloading);
         }
+    }
+    
+    public void PlayDamageSplash()
+    {
+        damageSplash?.PlayDamageEffect();
     }
 
     

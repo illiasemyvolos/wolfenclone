@@ -20,7 +20,10 @@ public class PlayerHealth : MonoBehaviour
         currentHealth -= damage;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
 
-        // Hook into new DamageSplash via UIManager later
+        if (InitializationManager.Instance.playerUI != null)
+        {
+            InitializationManager.Instance.playerUI.PlayDamageSplash();
+        }
 
         if (currentHealth <= 0)
         {

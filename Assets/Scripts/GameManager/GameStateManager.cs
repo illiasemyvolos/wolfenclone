@@ -9,11 +9,10 @@ public class GameStateManager : MonoBehaviour
 
     public GameState CurrentState { get; private set; }
 
-    // 🔧 Now static so other classes can subscribe without needing a reference
     public static event Action<GameState> OnGameStateChanged;
 
     [Header("Scene Names")]
-    [SerializeField] private string gameplayScene = "Level_02";
+    [SerializeField] private string gameplayScene = "Level_01";
     [SerializeField] private string mainMenuScene = "MainMenu";
     [SerializeField] private string blackoutScene = "Blackout";
     [SerializeField] private string gameOverScene = "GameOverScreen";
@@ -36,28 +35,37 @@ public class GameStateManager : MonoBehaviour
         if (newState == CurrentState) return;
 
         CurrentState = newState;
-        OnGameStateChanged?.Invoke(CurrentState); // ✅ Safe to call static event
+        OnGameStateChanged?.Invoke(CurrentState);
 
         switch (newState)
         {
             case GameState.MainMenu:
                 StartCoroutine(TransitionToScene(mainMenuScene));
                 break;
+
             case GameState.Gameplay:
-                StartCoroutine(TransitionToScene(gameplayScene));
+                if (!SceneManager.GetSceneByName(gameplayScene).isLoaded)
+                {
+                    StartCoroutine(TransitionToScene(gameplayScene));
+                }
+                else
+                {
+                    Debug.Log("🟢 Gameplay scene already loaded — skipping reload");
+                    OnGameStateChanged?.Invoke(CurrentState); // re-trigger listeners
+                }
                 break;
+
             case GameState.Victory:
                 StartCoroutine(TransitionToScene(levelFinishScene));
                 break;
+
             case GameState.GameOver:
                 StartCoroutine(TransitionToScene(gameOverScene));
                 break;
         }
 
-        // Time control
         Time.timeScale = (newState == GameState.Paused) ? 0 : 1;
 
-        // Cursor control
         if (newState == GameState.Gameplay)
         {
             Cursor.lockState = CursorLockMode.Locked;
@@ -94,8 +102,15 @@ public class GameStateManager : MonoBehaviour
         if (!SceneManager.GetSceneByName(targetScene).isLoaded)
             yield return SceneManager.LoadSceneAsync(targetScene, LoadSceneMode.Additive);
 
-        // Optional buffer
-        yield return new WaitForSeconds(0.05f);
+        // ✅ AUTO-ASSIGN UI REFERENCES (IMPORTANT FIX)
+        if (UIManager.Instance != null)
+        {
+            UIManager.Instance.TryAutoFindUI();
+            UIManager.Instance.ShowPauseMenu(false);
+            UIManager.Instance.ShowHUD(CurrentState == GameState.Gameplay);
+        }
+
+        yield return new WaitForSeconds(0.05f); // Optional buffer
 
         // 5. Fade from black
         if (BlackoutController.Instance != null)
@@ -106,7 +121,7 @@ public class GameStateManager : MonoBehaviour
                 yield return null;
         }
 
-        // 6. Unload the blackout scene
+        // 6. Unload blackout
         if (SceneManager.GetSceneByName(blackoutScene).isLoaded)
             yield return SceneManager.UnloadSceneAsync(blackoutScene);
     }

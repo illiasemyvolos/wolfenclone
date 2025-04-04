@@ -8,6 +8,8 @@ TagManager:
   - Door
   - Projectiles
   - Floor
+  - HUD
+  - PauseMenu
   layers:
   - Default
   - TransparentFX

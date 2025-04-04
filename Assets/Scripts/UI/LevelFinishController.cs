@@ -41,7 +41,11 @@ public class LevelFinishController : MonoBehaviour
 
     private void OnNext()
     {
-        GameStateManager.Instance.SetState(GameState.Gameplay);
+        // 🔁 Restart the scene cleanly using InitializationManager
+        UIManager.Instance.ShowHUD(true);
+        UIManager.Instance.ShowPauseMenu(false);
+
+        InitializationManager.Instance.RestartScene();
     }
 
     private void OnMenu()

@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -18,8 +19,7 @@ public class InitializationManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            // Optional: persist across scenes
-            // DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoad(gameObject); // ✅ Persist across scene reloads
 
             InitializeGame();
         }
@@ -27,6 +27,21 @@ public class InitializationManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        InitializeGame(); // ✅ Re-run this when retry loads the scene again
     }
 
     private void InitializeGame()
@@ -67,6 +82,23 @@ public class InitializationManager : MonoBehaviour
 
     public void RestartScene()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        StartCoroutine(RestartSceneRoutine());
+    }
+
+    private IEnumerator RestartSceneRoutine()
+    {
+        string currentScene = SceneManager.GetActiveScene().name;
+
+        // Optional: clear UI references before unload
+        UIManager.Instance?.ClearUIReferences();
+
+        // 1. Unload current scene
+        yield return SceneManager.UnloadSceneAsync(currentScene);
+
+        // 2. Load it again
+        yield return SceneManager.LoadSceneAsync(currentScene, LoadSceneMode.Additive);
+
+        // 3. Force back to gameplay mode
+        GameStateManager.Instance.SetState(GameState.Gameplay);
     }
 }
