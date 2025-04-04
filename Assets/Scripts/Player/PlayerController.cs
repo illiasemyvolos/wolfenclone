@@ -83,6 +83,10 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        // 🚫 Skip input if not in Gameplay state
+        if (GameStateManager.Instance.CurrentState != GameState.Gameplay)
+            return;
+
         HandleMovement();
         HandleLook();
         HandleJump();

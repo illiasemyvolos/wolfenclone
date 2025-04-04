@@ -57,14 +57,28 @@ public class UIManager : MonoBehaviour
     {
         if (hud == null)
         {
-            var hudObj = GameObject.FindWithTag("HUD");
-            if (hudObj != null) hud = hudObj;
+            foreach (var t in Resources.FindObjectsOfTypeAll<Transform>())
+            {
+                if (t.CompareTag("HUD"))
+                {
+                    hud = t.gameObject;
+                    Debug.Log("✅ HUD auto-assigned: " + hud.name);
+                    break;
+                }
+            }
         }
 
         if (pauseMenu == null)
         {
-            var pauseObj = GameObject.FindWithTag("PauseMenu");
-            if (pauseObj != null) pauseMenu = pauseObj;
+            foreach (var t in Resources.FindObjectsOfTypeAll<Transform>())
+            {
+                if (t.CompareTag("PauseMenu"))
+                {
+                    pauseMenu = t.gameObject;
+                    Debug.Log("✅ PauseMenu auto-assigned: " + pauseMenu.name);
+                    break;
+                }
+            }
         }
 
         // 🛑 Critical fix: make sure pause menu is hidden!

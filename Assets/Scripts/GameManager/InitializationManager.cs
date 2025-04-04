@@ -19,8 +19,7 @@ public class InitializationManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // ✅ Persist across scene reloads
-
+            DontDestroyOnLoad(gameObject);
             InitializeGame();
         }
         else
@@ -41,11 +40,12 @@ public class InitializationManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        InitializeGame(); // ✅ Re-run this when retry loads the scene again
+        InitializeGame(); // Re-run on scene reload (e.g., retry)
     }
 
     private void InitializeGame()
     {
+        // Link core references
         if (playerController == null)
         {
             playerController = FindObjectOfType<PlayerController>();
@@ -69,13 +69,22 @@ public class InitializationManager : MonoBehaviour
 
         if (playerController != null && playerUI != null)
         {
-            playerUI.UpdatePlayerStats(); // Update UI with initial stats
+            playerUI.UpdatePlayerStats();
         }
 
+        // Debug summary
         Debug.Log($"✅ Initialization Summary:\n" +
                   $"- PlayerController: {(playerController != null ? "OK" : "Missing")}\n" +
                   $"- WeaponManager: {(weaponManager != null ? "OK" : "Missing")}\n" +
                   $"- PlayerUI: {(playerUI != null ? "OK" : "Missing")}");
+
+        // Reconnect and update UI
+        if (UIManager.Instance != null)
+        {
+            UIManager.Instance.TryAutoFindUI();
+            UIManager.Instance.ShowHUD(true);
+            UIManager.Instance.ShowPauseMenu(false);
+        }
 
         OnGameInitialized?.Invoke();
     }
@@ -89,16 +98,16 @@ public class InitializationManager : MonoBehaviour
     {
         string currentScene = SceneManager.GetActiveScene().name;
 
-        // Optional: clear UI references before unload
+        // Clear stale UI references before reloading
         UIManager.Instance?.ClearUIReferences();
 
         // 1. Unload current scene
         yield return SceneManager.UnloadSceneAsync(currentScene);
 
-        // 2. Load it again
+        // 2. Reload it
         yield return SceneManager.LoadSceneAsync(currentScene, LoadSceneMode.Additive);
 
-        // 3. Force back to gameplay mode
+        // 3. Set back to gameplay
         GameStateManager.Instance.SetState(GameState.Gameplay);
     }
 }
