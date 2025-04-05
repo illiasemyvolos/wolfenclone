@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.InputSystem; // Required for haptics
 
 public class WeaponShootHandler : MonoBehaviour
 {
@@ -47,6 +48,8 @@ public class WeaponShootHandler : MonoBehaviour
         {
             FireSingleShot();
         }
+
+        TriggerHaptics(); // 🟡 New: haptics
 
         weapon.ApplyAccuracyPenalty();
         StartCoroutine(weapon.ApplyRecoil());
@@ -108,5 +111,22 @@ public class WeaponShootHandler : MonoBehaviour
         }
 
         weapon.ShowMuzzleFlash();
+    }
+
+    private void TriggerHaptics()
+    {
+        var gamepad = Gamepad.current;
+        if (gamepad != null)
+        {
+            // Example rumble values: tweak for effect
+            gamepad.SetMotorSpeeds(0.4f, 0.8f); // (lowFreq, highFreq)
+            StartCoroutine(StopHapticsAfterDelay(0.2f));
+        }
+    }
+
+    private IEnumerator StopHapticsAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        Gamepad.current?.SetMotorSpeeds(0f, 0f);
     }
 }
