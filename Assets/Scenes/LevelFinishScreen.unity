@@ -817,6 +817,7 @@ MonoBehaviour:
   timeText: {fileID: 547067331}
   nextLevelButton: {fileID: 1309725459}
   mainMenuButton: {fileID: 664020735}
+  firstSelectedButton: {fileID: 1309725458}
 --- !u!4 &714862165
 Transform:
   m_ObjectHideFlags: 0

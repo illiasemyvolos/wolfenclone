@@ -2,13 +2,20 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem; // <-- add this
 using System.Collections;
 
 public class PauseMenuController : MonoBehaviour
 {
+    [Header("Buttons")]
     [SerializeField] private Button resumeButton;
     [SerializeField] private Button restartButton;
     [SerializeField] private Button mainMenuButton;
+
+    [Header("Gamepad Support")]
+    [SerializeField] private GameObject firstSelectedButton;
+
+    private InputAction pauseAction;
 
     private void OnEnable()
     {
@@ -22,6 +29,24 @@ public class PauseMenuController : MonoBehaviour
 
         mainMenuButton.onClick.RemoveAllListeners();
         mainMenuButton.onClick.AddListener(OnMainMenuClicked);
+
+        // 🕹️ Setup Pause input action
+        var playerInput = FindObjectOfType<PlayerInput>();
+        if (playerInput != null)
+        {
+            pauseAction = playerInput.actions["Pause"];
+            if (pauseAction != null)
+            {
+                pauseAction.performed += OnPausePerformed;
+                pauseAction.Enable();
+            }
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (pauseAction != null)
+            pauseAction.performed -= OnPausePerformed;
     }
 
     private void Start()
@@ -29,15 +54,13 @@ public class PauseMenuController : MonoBehaviour
         UIManager.Instance.ShowPauseMenu(false);
     }
 
-    private void Update()
+    private void OnPausePerformed(InputAction.CallbackContext ctx)
     {
-        if (GameStateManager.Instance.CurrentState == GameState.Gameplay &&
-            Input.GetKeyDown(KeyCode.Escape))
+        if (GameStateManager.Instance.CurrentState == GameState.Gameplay)
         {
             PauseGame();
         }
-        else if (GameStateManager.Instance.CurrentState == GameState.Paused &&
-                 Input.GetKeyDown(KeyCode.Escape))
+        else if (GameStateManager.Instance.CurrentState == GameState.Paused)
         {
             ResumeGame();
         }
@@ -55,6 +78,7 @@ public class PauseMenuController : MonoBehaviour
         Cursor.visible = true;
 
         EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(firstSelectedButton);
     }
 
     private void ResumeGame()
@@ -64,7 +88,7 @@ public class PauseMenuController : MonoBehaviour
 
     private IEnumerator ResumeAfterFrame()
     {
-        yield return null; // Let Unity process the UI click before gameplay input resumes
+        yield return null;
 
         Debug.Log("▶️ PauseMenuController: Resume button clicked");
 

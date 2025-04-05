@@ -35,7 +35,6 @@ public class GameStateManager : MonoBehaviour
         if (newState == CurrentState) return;
 
         CurrentState = newState;
-        OnGameStateChanged?.Invoke(CurrentState);
 
         switch (newState)
         {
@@ -102,15 +101,19 @@ public class GameStateManager : MonoBehaviour
         if (!SceneManager.GetSceneByName(targetScene).isLoaded)
             yield return SceneManager.LoadSceneAsync(targetScene, LoadSceneMode.Additive);
 
-        // ✅ AUTO-ASSIGN UI REFERENCES (IMPORTANT FIX)
+        yield return new WaitForSeconds(0.05f); // short buffer to allow scene to initialize
+
+        // ✅ Fire GameStateChanged *after* scene is fully loaded
+        Debug.Log($"📣 GameStateManager: Scene '{targetScene}' loaded, triggering OnGameStateChanged for {CurrentState}");
+        OnGameStateChanged?.Invoke(CurrentState);
+
+        // ✅ UI setup
         if (UIManager.Instance != null)
         {
             UIManager.Instance.TryAutoFindUI();
             UIManager.Instance.ShowPauseMenu(false);
             UIManager.Instance.ShowHUD(CurrentState == GameState.Gameplay);
         }
-
-        yield return new WaitForSeconds(0.05f); // Optional buffer
 
         // 5. Fade from black
         if (BlackoutController.Instance != null)

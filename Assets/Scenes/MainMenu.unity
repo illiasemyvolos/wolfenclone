@@ -150,6 +150,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startButton: {fileID: 307178941}
   quitButton: {fileID: 1903314433}
+  firstSelectedButton: {fileID: 307178939}
 --- !u!4 &135699504
 Transform:
   m_ObjectHideFlags: 0

@@ -1,17 +1,21 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.EventSystems;
 
 public class LevelFinishController : MonoBehaviour
 {
+    [Header("UI")]
     [SerializeField] private TextMeshProUGUI enemiesKilledText;
     [SerializeField] private TextMeshProUGUI timeText;
     [SerializeField] private Button nextLevelButton;
     [SerializeField] private Button mainMenuButton;
 
+    [Header("Gamepad Support")]
+    [SerializeField] private GameObject firstSelectedButton;
+
     private void Start()
     {
-        // Initialize UI content
         enemiesKilledText.text = $"Enemies Defeated: {GameStats.EnemiesKilled}";
         timeText.text = $"Time: {GameStats.LevelTime:F1}s";
 
@@ -19,7 +23,7 @@ public class LevelFinishController : MonoBehaviour
         mainMenuButton.onClick.AddListener(OnMenu);
 
         GameStateManager.OnGameStateChanged += OnGameStateChanged;
-        gameObject.SetActive(false); // Hide by default
+        gameObject.SetActive(false);
     }
 
     private void OnDestroy()
@@ -33,15 +37,20 @@ public class LevelFinishController : MonoBehaviour
 
         if (newState == GameState.Victory)
         {
-            // Refresh stats on state change
+            // Update stats
             enemiesKilledText.text = $"Enemies Defeated: {GameStats.EnemiesKilled}";
             timeText.text = $"Time: {GameStats.LevelTime:F1}s";
+
+            // 🎮 Select default button
+            EventSystem.current.SetSelectedGameObject(null);
+            EventSystem.current.SetSelectedGameObject(firstSelectedButton);
         }
     }
 
     private void OnNext()
     {
-        // 🔁 Restart the scene cleanly using InitializationManager
+        Debug.Log("▶️ LevelFinish: Next Level clicked");
+
         UIManager.Instance.ShowHUD(true);
         UIManager.Instance.ShowPauseMenu(false);
 
@@ -50,6 +59,8 @@ public class LevelFinishController : MonoBehaviour
 
     private void OnMenu()
     {
+        Debug.Log("🏠 LevelFinish: Main Menu clicked");
+
         GameStateManager.Instance.SetState(GameState.MainMenu);
     }
 }
